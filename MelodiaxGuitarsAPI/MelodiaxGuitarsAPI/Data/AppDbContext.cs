@@ -28,6 +28,18 @@ namespace MelodiaxGuitarsAPI.Data
                 .WithMany(op => op.OrderProducts)
                 .HasForeignKey(o => o.OrderId);
 
+            modelBuilder.Entity<Order>()
+                .Property(o => o.ShippingCost)
+                .HasColumnType("decimal(8, 2)"); 
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.SubtotalCost)
+                .HasColumnType("decimal(8, 2)");
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.TotalCost)
+                .HasColumnType("decimal(8, 2)");
+
             base.OnModelCreating(modelBuilder);
         }
 
