@@ -1,0 +1,31 @@
+<mat-toolbar class="navbar">
+    <div routerLink="/" class="logo">
+        <a class="logo-text">Melodiax Guitars</a>
+    </div>
+    <button mat-icon-button class="menu-toggle" (click)="toggleMenu()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <div class="menu-items" [ngClass]="{ 'active': isMenuActive }">
+        <div class="menu" [ngClass]="{ 'active': isMenuActive }">
+            <ul class="menu-list">
+                <li><a routerLink="/acoustic">Acoustic Guitars</a></li>
+                <li><a routerLink="/electric">Electric Guitars</a></li>
+                <li><a routerLink="/bass">Bass Guitars</a></li>
+                <li><a routerLink="/amps">Amps</a></li>
+                <li><a routerLink="/pedals">Pedals</a></li>
+                <li><a routerLink="/accessories">Accessories</a></li>
+            </ul>
+        </div>
+        <div class="user-actions" [ngClass]="{ 'active': isMenuActive }">
+            <ul class="user-actions-list">
+                <li><a routerLink="/register">Register</a></li>
+                <li><a routerLink="/login">Login</a></li>
+                <li>
+                    <a routerLink="/cart">
+                        <mat-icon class="shopping-cart" matBadge="0" matBadgeSize="small" matBadgeColor="warn"  aria-hidden="false">shopping_cart</mat-icon>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</mat-toolbar>
