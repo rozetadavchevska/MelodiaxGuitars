@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Y3ipWWqdy4JwAoeQ5xKpJuNO9wsnMAZkstgVkj8iLr8MM8kkfZQMjQ1ooCu23/SiTc2tftMysSMu6E9Iq+6TqQ==",
+  "dgSpecHash": "iMl23N2hW8Jg/chK1z68AUeG7DOOW2mrNB3u3NosmXhYUPvD3bUXE40GMEuyHIYgd+qEskbWz936ZP8Gk4sVmg==",
   "success": true,
   "projectFilePath": "C:\\Users\\rozet\\OneDrive\\Desktop\\Github Projects\\MelodiaxGuitars\\MelodiaxGuitarsAPI\\MelodiaxGuitarsAPI\\MelodiaxGuitarsAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\rozet\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\rozet\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\rozet\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\rozet\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
