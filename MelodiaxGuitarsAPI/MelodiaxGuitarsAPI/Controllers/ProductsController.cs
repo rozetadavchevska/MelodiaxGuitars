@@ -18,7 +18,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         public ProductsController(AppDbContext context)
         {
-            _context = context;
+            _context = context; 
         }
 
         // GET: api/Products
