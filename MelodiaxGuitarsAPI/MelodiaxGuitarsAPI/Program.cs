@@ -1,5 +1,7 @@
 using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Extensions;
+using MelodiaxGuitarsAPI.Repositories.Base;
+using MelodiaxGuitarsAPI.Repositories.Brand;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 var app = builder.Build();
 
