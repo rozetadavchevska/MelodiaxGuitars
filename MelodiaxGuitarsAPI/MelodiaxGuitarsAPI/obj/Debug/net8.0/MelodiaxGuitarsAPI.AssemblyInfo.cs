@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MelodiaxGuitarsAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+552505c309776cf1a06ad73d68d9432714f76c08")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ca4e5bc7815e68177063d9df7937ed23de81e13")]
 [assembly: System.Reflection.AssemblyProductAttribute("MelodiaxGuitarsAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MelodiaxGuitarsAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
