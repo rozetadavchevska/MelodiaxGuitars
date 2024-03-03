@@ -45,6 +45,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
                         var oldOrderProduct = oldOrder.OrderProducts.FirstOrDefault(op => op.OrderId == newOrderProduct.OrderId);
                         if(oldOrderProduct != null)
                         {
+                            oldOrderProduct.OrderId = newOrderProduct.OrderId;
                             oldOrderProduct.ProductId = newOrderProduct.ProductId;
                             oldOrderProduct.Quantity = newOrderProduct.Quantity;
                         } 

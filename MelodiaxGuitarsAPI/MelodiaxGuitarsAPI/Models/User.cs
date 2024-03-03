@@ -33,5 +33,7 @@ namespace MelodiaxGuitarsAPI.Models
         [NotNull]
         public string Country { get; set; } = string.Empty;
         public ICollection<Order>? Orders { get; set; }
+        public int ShoppingCartId { get; set; }
+        public ShoppingCart? ShoppingCart { get; set; }
     }
 }
