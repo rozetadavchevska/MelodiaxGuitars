@@ -10,6 +10,6 @@ namespace MelodiaxGuitarsAPI.Models
         public int UserId { get; set; }
         [NotNull]
         public User User {  get; set; } = new User();
-        public ICollection<CartItem>? Items { get; set; }
+        public ICollection<CartItem>? CartItems { get; set; }
     }
 }

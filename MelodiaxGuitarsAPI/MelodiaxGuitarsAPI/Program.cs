@@ -1,7 +1,5 @@
 using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Extensions;
-using MelodiaxGuitarsAPI.Repositories.Base;
-using MelodiaxGuitarsAPI.Repositories.Brand;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 

@@ -5,6 +5,8 @@ namespace MelodiaxGuitarsAPI.Models
 {
     public class OrderProduct
     {
+        [Key]
+        public int Id { get; set; }
         public int OrderId {  get; set; }
         [NotNull]
         public Order Order { get; set; } = new Order();
