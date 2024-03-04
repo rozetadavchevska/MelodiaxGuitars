@@ -24,8 +24,11 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
 
         public async Task UpdateBrandAsync(int id, Brand brand)
         {
-            var oldBrand = await _context.Brands.FindAsync(id);
-            if(oldBrand != null)
+            var oldBrand = await _context.Brands
+                .Include(b => b.Products)
+                .FirstOrDefaultAsync(b => b.Id == id);
+            
+            if (oldBrand != null)
             {
                 oldBrand.Name = brand.Name;
                 oldBrand.Description = brand.Description;
