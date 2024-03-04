@@ -33,6 +33,22 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
                 oldBrand.Name = brand.Name;
                 oldBrand.Description = brand.Description;
 
+                foreach (var newProduct in brand.Products)
+                {
+                    if (!oldBrand.Products.Any(p => p.Id == newProduct.Id))
+                    {
+                        oldBrand.Products.Add(newProduct);
+                    }
+                }
+
+                foreach (var oldProduct in oldBrand.Products.ToList())
+                {
+                    if (!brand.Products.Any(p => p.Id == oldProduct.Id))
+                    {
+                        oldBrand.Products.Remove(oldProduct);
+                    }
+                }
+
                 await _context.SaveChangesAsync();
             }
         }

@@ -79,7 +79,6 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
                         if (oldOrderProduct != null)
                         {
                             oldOrderProduct.OrderId = newProduct.OrderId;
-                            oldOrderProduct.ProductId = newProduct.ProductId;
                             oldOrderProduct.Quantity = newProduct.Quantity;
                         }
                         else
