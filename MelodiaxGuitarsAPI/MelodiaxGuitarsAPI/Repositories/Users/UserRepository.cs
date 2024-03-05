@@ -13,6 +13,35 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
             _context = context;
         }
 
+        public async Task<User> GetUserById(int id)
+        {
+            var user = await _context.Users
+                .Include(s => s.ShoppingCart)
+                .Include(o => o.Orders)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user;
+        }
+
+        public async Task AddUserAsync(User user)
+        {
+            var newUser = new User()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Password = user.Password,
+                Phone = user.Phone,
+                Address = user.Address,
+                City = user.City,
+                Country = user.Country,
+                ShoppingCartId = user.ShoppingCartId
+            };
+
+            await _context.Users.AddAsync(newUser);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateUserAsync(int id, User user)
         {
             var oldUser = await _context.Users

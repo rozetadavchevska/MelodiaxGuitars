@@ -13,6 +13,27 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
             _context = context;
         }
 
+        public async Task<ShoppingCart> GetShoppingCartById(int id)
+        {
+            var shoppingCart = await _context.ShoppingCarts
+                .Include(u => u.User)
+                .Include(c => c.CartItems)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            return shoppingCart;
+        }
+
+        public async Task AddShoppingCartAsync(ShoppingCart shoppingCart)
+        {
+            var newShoppingCart = new ShoppingCart()
+            {
+                UserId = shoppingCart.UserId
+            };
+
+            await _context.ShoppingCarts.AddAsync(newShoppingCart);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateShoppingCartAsync(int id, ShoppingCart shoppingCart)
         {
             var oldShoppingCart = await _context.ShoppingCarts
