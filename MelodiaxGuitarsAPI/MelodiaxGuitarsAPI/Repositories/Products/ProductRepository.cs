@@ -1,7 +1,13 @@
 ﻿using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Base;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using NuGet.Packaging;
+using NuGet.Packaging.Core;
+using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace MelodiaxGuitarsAPI.Repositories.Products
 {
@@ -11,6 +17,55 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
         public ProductRepository(AppDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<Product> GetProductById(int id)
+        {
+            var product = await _context.Products
+                .Include(b => b.Brand)
+                .Include(c => c.Category)
+                .Include(op => op.OrderProducts)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            return product;
+        }
+
+        public async Task AddProductAsync(int id, Product product)
+        {
+            var newProduct = new Product()
+            {
+                Name = product.Name,
+                Description = product.Description,
+                BrandId = product.BrandId,
+                Model = product.Model,
+                Type = product.Type,
+                Hand = product.Hand,
+                BodyShape = product.BodyShape,
+                Color = product.Color,
+                Top = product.Top,
+                SidesAndBack = product.SidesAndBack,
+                Neck = product.Neck,
+                Nut = product.Nut,
+                Fingerboard = product.Fingerboard,
+                Strings = product.Strings,
+                Tuners = product.Tuners,
+                Bridge = product.Bridge,
+                Controls = product.Controls,
+                Pickups = product.Pickups,
+                PickupSwitch = product.PickupSwitch,
+                Cutaway = product.Cutaway,
+                Pickguard = product.Pickguard,
+                Case = product.Case,
+                ScaleLength = product.ScaleLength,
+                Width = product.Width,
+                Depth = product.Depth,
+                Weight = product.Weight,
+                CategoryId = product.CategoryId,
+                ImageUrl = product.ImageUrl
+            };
+
+            await _context.Products.AddAsync(newProduct);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateProductAsync(int id, Product product)
