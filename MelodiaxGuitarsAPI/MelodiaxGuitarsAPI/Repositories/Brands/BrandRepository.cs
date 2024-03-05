@@ -22,6 +22,24 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
             return brandDetails;
         }
 
+
+        public async Task AddBrandAsync(Brand brand)
+        {
+            if (brand == null)
+            {
+                throw new ArgumentNullException(nameof(brand), "Brand object cannot be null.");
+            }
+
+            var newBrand = new Brand()
+            {
+                Name = brand.Name,
+                Description = brand.Description
+            };
+
+            await _context.Brands.AddAsync(newBrand);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateBrandAsync(int id, Brand brand)
         {
             var oldBrand = await _context.Brands
@@ -50,6 +68,22 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
                 }
 
                 await _context.SaveChangesAsync();
+            }
+        }
+
+
+        public async Task DeleteBrandAsync(int id)
+        {
+            var brandToDelete = await _context.Brands.FindAsync(id);
+
+            if (brandToDelete != null)
+            {
+                _context.Brands.Remove(brandToDelete);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ArgumentException($"Brand with ID {id} not found.", nameof(id));
             }
         }
     }
