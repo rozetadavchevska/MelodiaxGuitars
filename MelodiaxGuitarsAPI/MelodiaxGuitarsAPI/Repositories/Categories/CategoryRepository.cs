@@ -45,16 +45,5 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task DeleteCategoryAsync(int id)
-        {
-            var categoryToDelete = await _context.Categories.FindAsync(id);
-
-            if(categoryToDelete != null)
-            {
-                _context.Categories.Remove(categoryToDelete);
-                await _context.SaveChangesAsync();
-            }
-        }
     }
 }

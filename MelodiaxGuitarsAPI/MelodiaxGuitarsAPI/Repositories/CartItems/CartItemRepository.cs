@@ -55,15 +55,5 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task DeleteCartItemAsync(int id)
-        {
-            var cartItemToDelete = await _context.CartItems.FindAsync(id);
-            if(cartItemToDelete != null)
-            {
-                _context.CartItems.Remove(cartItemToDelete);
-                await _context.SaveChangesAsync();
-            }
-        }
     }
 }

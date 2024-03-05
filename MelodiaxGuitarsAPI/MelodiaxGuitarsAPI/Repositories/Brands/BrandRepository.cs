@@ -70,21 +70,5 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
                 await _context.SaveChangesAsync();
             }
         }
-
-
-        public async Task DeleteBrandAsync(int id)
-        {
-            var brandToDelete = await _context.Brands.FindAsync(id);
-
-            if (brandToDelete != null)
-            {
-                _context.Brands.Remove(brandToDelete);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                throw new ArgumentException($"Brand with ID {id} not found.", nameof(id));
-            }
-        }
     }
 }

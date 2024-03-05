@@ -8,6 +8,5 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
         Task<CartItem> GetCartItemById(int id);
         Task AddCartItemAsync(CartItem item);
         Task UpdateCartItemAsync(int id, CartItem item);
-        Task DeleteCartItemAsync(int id);
     }
 }
