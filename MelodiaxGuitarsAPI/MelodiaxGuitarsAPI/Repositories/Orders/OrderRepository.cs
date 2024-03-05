@@ -13,6 +13,31 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
             _context = context;
         }
 
+        public async Task<Order> GetOrderById(int id)
+        {
+            var order = await _context.Orders
+                .Include(u => u.User)
+                .Include(op => op.OrderProducts)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            return order;
+        }
+
+        public async Task AddOrderAsync(int id, Order order)
+        {
+            var newOrder = new Order()
+            {
+                UserId = order.UserId,
+                SubtotalCost = order.SubtotalCost,
+                Shipping = order.Shipping,
+                ShippingCost = order.ShippingCost,
+                TotalCost = order.TotalCost
+            };
+
+            await _context.Orders.AddAsync(newOrder);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateOrderAsync(int id, Order order)
         {
             var oldOrder = await _context.Orders
