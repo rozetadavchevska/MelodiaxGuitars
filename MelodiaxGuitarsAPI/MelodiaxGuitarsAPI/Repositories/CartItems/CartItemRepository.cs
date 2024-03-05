@@ -1,6 +1,7 @@
 ﻿using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace MelodiaxGuitarsAPI.Repositories.CartItems
 {
@@ -10,6 +11,27 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
         public CartItemRepository(AppDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<CartItem> GetCartItemById(int id)
+        {
+            var cartItem = await _context.CartItems
+                .Include(p => p.Product)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            return cartItem;
+        }
+
+        public async Task AddCartItemAsync(CartItem item)
+        {
+            var newCartItem = new CartItem()
+            {
+                ProductId = item.ProductId,
+                Quantity = item.Quantity
+            };
+
+            await _context.CartItems.AddAsync(newCartItem);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCartItemAsync(int id, CartItem item)
@@ -30,6 +52,16 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
                     }
                 }
 
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteCartItemAsync(int id)
+        {
+            var cartItemToDelete = await _context.CartItems.FindAsync(id);
+            if(cartItemToDelete != null)
+            {
+                _context.CartItems.Remove(cartItemToDelete);
                 await _context.SaveChangesAsync();
             }
         }

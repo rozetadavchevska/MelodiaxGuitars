@@ -1,6 +1,7 @@
 ﻿using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace MelodiaxGuitarsAPI.Repositories.Categories
 {
@@ -10,6 +11,26 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
         public CategoryRepository(AppDbContext context) : base(context)
         {
             _context = context;
+        }
+        public async Task<Category> GetCategoryById(int id)
+        {
+            var category = await _context.Categories
+                .Include(p => p.Products)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            return category;
+        }
+
+        public async Task AddCategoryAsync(Category category)
+        {
+            var newCategory = new Category()
+            {
+                Name = category.Name,
+                Description = category.Description
+            };
+
+            await _context.Categories.AddAsync(newCategory);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateCategoryAsync(int id, Category category)
@@ -21,6 +42,17 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
                 oldCategory.Name = category.Name;
                 oldCategory.Description = category.Description;
                 
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteCategoryAsync(int id)
+        {
+            var categoryToDelete = await _context.Categories.FindAsync(id);
+
+            if(categoryToDelete != null)
+            {
+                _context.Categories.Remove(categoryToDelete);
                 await _context.SaveChangesAsync();
             }
         }
