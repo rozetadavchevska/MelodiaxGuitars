@@ -40,8 +40,15 @@ namespace MelodiaxGuitarsAPI.Data
                 .Property(o => o.TotalCost)
                 .HasColumnType("decimal(8, 2)");
 
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.ShoppingCart)
+                .WithOne(sc => sc.User)
+                .HasForeignKey<ShoppingCart>(sc => sc.UserId);
+
             base.OnModelCreating(modelBuilder);
         }
+
+        
 
         public DbSet<Brand> Brands { get; set; }
         public DbSet<CartItem> CartItems { get; set; }

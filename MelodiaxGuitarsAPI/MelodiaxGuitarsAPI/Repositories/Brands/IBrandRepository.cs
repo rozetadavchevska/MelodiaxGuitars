@@ -8,5 +8,6 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
         Task<Brand> GetBrandById(int id);
         Task AddBrandAsync(Brand brand);
         Task UpdateBrandAsync(int id, Brand brand);
+        Task UpdateBrandProductsAsync(int brandId, int productId);
     }
 }

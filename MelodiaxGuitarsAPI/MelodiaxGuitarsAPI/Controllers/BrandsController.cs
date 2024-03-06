@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Models;
+using MelodiaxGuitarsAPI.Repositories.Brands;
+using AutoMapper;
+using MelodiaxGuitarsAPI.DTOs;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -14,61 +17,52 @@ namespace MelodiaxGuitarsAPI.Controllers
     [ApiController]
     public class BrandsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IBrandRepository _brandRepository;
+        private readonly IMapper _mapper;
 
-        public BrandsController(AppDbContext context)
+        public BrandsController(IBrandRepository brandRepository, IMapper mapper)
         {
-            _context = context;
+            _brandRepository = brandRepository;
+            _mapper = mapper;
         }
 
         // GET: api/Brands
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Brand>>> GetBrands()
+        public async Task<ActionResult<IEnumerable<BrandDto>>> GetBrands()
         {
-            return await _context.Brands.ToListAsync();
+            var brands = await _brandRepository.GetAllAsync();
+            var brandDto = _mapper.Map<List<BrandDto>>(brands);
+            return Ok(brandDto);
         }
 
         // GET: api/Brands/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Brand>> GetBrand(int id)
+        public async Task<ActionResult<BrandDto>> GetBrand(int id)
         {
-            var brand = await _context.Brands.FindAsync(id);
-
+            var brand = await _brandRepository.GetBrandById(id);
             if (brand == null)
             {
                 return NotFound();
             }
 
-            return brand;
+            var brandDto = _mapper.Map<BrandDto>(brand);
+            return Ok(brandDto);
         }
 
         // PUT: api/Brands/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBrand(int id, Brand brand)
+        public async Task<IActionResult> PutBrand(int id, BrandDto brandDto)
         {
-            if (id != brand.Id)
+            var brandUpdate = await _brandRepository.GetBrandById(id);
+            if(brandUpdate == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(brand).State = EntityState.Modified;
+            brandUpdate.Name = brandDto.Name;
+            brandUpdate.Description = brandDto.Description;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BrandExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _brandRepository.UpdateBrandAsync(id, brandUpdate);
 
             return NoContent();
         }
@@ -76,33 +70,32 @@ namespace MelodiaxGuitarsAPI.Controllers
         // POST: api/Brands
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Brand>> PostBrand(Brand brand)
+        public async Task<ActionResult<BrandDto>> PostBrand(BrandDto brandDto)
         {
-            _context.Brands.Add(brand);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var brand = _mapper.Map<Brand>(brandDto);
+            await _brandRepository.AddBrandAsync(brand);
 
-            return CreatedAtAction("GetBrand", new { id = brand.Id }, brand);
+            var createdBrandDto = _mapper.Map<BrandDto>(brand);
+
+            return CreatedAtAction(nameof(GetBrand), new { id = brand.Id }, createdBrandDto);
         }
 
         // DELETE: api/Brands/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBrand(int id)
         {
-            var brand = await _context.Brands.FindAsync(id);
-            if (brand == null)
+            var brandToDelete = await _brandRepository.GetBrandById(id);
+            if (brandToDelete == null)
             {
                 return NotFound();
             }
 
-            _context.Brands.Remove(brand);
-            await _context.SaveChangesAsync();
-
+            await _brandRepository.DeleteAsync(id);
             return NoContent();
-        }
-
-        private bool BrandExists(int id)
-        {
-            return _context.Brands.Any(e => e.Id == id);
         }
     }
 }

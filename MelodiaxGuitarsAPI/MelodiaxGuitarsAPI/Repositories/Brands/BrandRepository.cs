@@ -70,5 +70,21 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateBrandProductsAsync(int brandId, int productId)
+        {
+            var brand = await _context.Brands
+                .Include(b => b.Products)
+                .FirstOrDefaultAsync(b => b.Id == brandId);
+            if (brand != null)
+            {
+                var product = await _context.Products.FindAsync(productId);
+                if (product != null)
+                {
+                    brand.Products.Add(product);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
     }
 }
