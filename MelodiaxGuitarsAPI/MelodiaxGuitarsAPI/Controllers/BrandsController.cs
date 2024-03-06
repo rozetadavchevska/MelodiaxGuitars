@@ -68,7 +68,6 @@ namespace MelodiaxGuitarsAPI.Controllers
         }
 
         // POST: api/Brands
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<BrandDto>> PostBrand(BrandDto brandDto)
         {
