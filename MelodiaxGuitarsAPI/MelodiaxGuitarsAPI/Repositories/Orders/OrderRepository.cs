@@ -23,7 +23,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
             return order;
         }
 
-        public async Task AddOrderAsync(int id, Order order)
+        public async Task AddOrderAsync(Order order)
         {
             var newOrder = new Order()
             {
@@ -82,6 +82,19 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
 
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task UpdateOrderProductAsync(int orderId, int orderProductId)
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderProducts)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+
+            var orderProduct = await _context.OrderProducts.FindAsync(orderProductId);
+
+            order.OrderProducts.Add(orderProduct);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

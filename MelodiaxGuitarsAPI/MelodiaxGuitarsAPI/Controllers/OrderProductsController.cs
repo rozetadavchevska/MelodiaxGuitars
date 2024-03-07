@@ -79,7 +79,7 @@ namespace MelodiaxGuitarsAPI.Controllers
             
             var createdOrderProduct = _mapper.Map<OrderProductDto>(orderProduct);
 
-            return CreatedAtAction(nameof(GetOrderProduct), new { id = orderProduct.ProductId }, createdOrderProduct);
+            return CreatedAtAction(nameof(GetOrderProduct), new { id = orderProduct.Id }, createdOrderProduct);
         }
 
         // DELETE: api/OrderProducts/5
