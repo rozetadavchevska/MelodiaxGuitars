@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Models;
+using MelodiaxGuitarsAPI.Repositories.OrderProducts;
+using AutoMapper;
+using MelodiaxGuitarsAPI.DTOs;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -14,109 +17,84 @@ namespace MelodiaxGuitarsAPI.Controllers
     [ApiController]
     public class OrderProductsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IOrderProductRepository _orderProductRepository;
+        private readonly IMapper _mapper;
 
-        public OrderProductsController(AppDbContext context)
+        public OrderProductsController(IOrderProductRepository orderProductRepository, IMapper mapper)
         {
-            _context = context;
+            _orderProductRepository = orderProductRepository;
+            _mapper = mapper;
         }
 
         // GET: api/OrderProducts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderProduct>>> GetOrderProducts()
+        public async Task<ActionResult<IEnumerable<OrderProductDto>>> GetOrderProducts()
         {
-            return await _context.OrderProducts.ToListAsync();
+            var orderProduct = await _orderProductRepository.GetAllAsync();
+            var orderProductDto = _mapper.Map<List<OrderProductDto>>(orderProduct);
+            return Ok(orderProductDto);
         }
 
         // GET: api/OrderProducts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrderProduct>> GetOrderProduct(int id)
+        public async Task<ActionResult<OrderProductDto>> GetOrderProduct(int id)
         {
-            var orderProduct = await _context.OrderProducts.FindAsync(id);
+            var orderProduct = await _orderProductRepository.GetOrderProductById(id);
 
             if (orderProduct == null)
             {
                 return NotFound();
             }
 
-            return orderProduct;
+            var orderProductDto = _mapper.Map<OrderProductDto>(orderProduct);
+            return Ok(orderProductDto);
         }
 
         // PUT: api/OrderProducts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderProduct(int id, OrderProduct orderProduct)
+        public async Task<IActionResult> PutOrderProduct(int id, OrderProductDto orderProductDto)
         {
-            if (id != orderProduct.ProductId)
+            var orderProductToUpdate = await _orderProductRepository.GetOrderProductById(id);
+            if (orderProductToUpdate == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(orderProduct).State = EntityState.Modified;
+            var product = _mapper.Map<Product>(orderProductDto.Product);
+            var order = _mapper.Map<Order>(orderProductDto.Order);
+            orderProductToUpdate.Product = product;
+            orderProductToUpdate.Order = order;
+            orderProductToUpdate.Quantity = orderProductToUpdate.Quantity;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _orderProductRepository.UpdateOrderProductsAsync(id, orderProductToUpdate);
             return NoContent();
         }
 
         // POST: api/OrderProducts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrderProduct>> PostOrderProduct(OrderProduct orderProduct)
+        public async Task<ActionResult<OrderProductDto>> PostOrderProduct(OrderProductDto orderProductDto)
         {
-            _context.OrderProducts.Add(orderProduct);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (OrderProductExists(orderProduct.ProductId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var orderProduct = _mapper.Map<OrderProduct>(orderProductDto);
+            await _orderProductRepository.AddOrderProductAsync(orderProduct);
+            
+            var createdOrderProduct = _mapper.Map<OrderProductDto>(orderProduct);
 
-            return CreatedAtAction("GetOrderProduct", new { id = orderProduct.ProductId }, orderProduct);
+            return CreatedAtAction(nameof(GetOrderProduct), new { id = orderProduct.ProductId }, createdOrderProduct);
         }
 
         // DELETE: api/OrderProducts/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrderProduct(int id)
         {
-            var orderProduct = await _context.OrderProducts.FindAsync(id);
+            var orderProduct = await _orderProductRepository.GetOrderProductById(id);
             if (orderProduct == null)
             {
                 return NotFound();
             }
 
-            _context.OrderProducts.Remove(orderProduct);
-            await _context.SaveChangesAsync();
+            await _orderProductRepository.DeleteAsync(id);
 
             return NoContent();
-        }
-
-        private bool OrderProductExists(int id)
-        {
-            return _context.OrderProducts.Any(e => e.ProductId == id);
         }
     }
 }

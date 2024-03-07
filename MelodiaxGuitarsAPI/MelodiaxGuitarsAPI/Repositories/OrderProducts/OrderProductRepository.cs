@@ -23,7 +23,7 @@ namespace MelodiaxGuitarsAPI.Repositories.OrderProducts
             return order;
         }
 
-        public async Task AddOrderProduct(int id, OrderProduct orderProduct)
+        public async Task AddOrderProductAsync(OrderProduct orderProduct)
         {
             var newOrderProduct = new OrderProduct()
             {
