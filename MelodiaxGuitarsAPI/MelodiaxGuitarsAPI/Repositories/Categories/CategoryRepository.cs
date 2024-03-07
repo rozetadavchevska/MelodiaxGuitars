@@ -2,6 +2,7 @@
 using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace MelodiaxGuitarsAPI.Repositories.Categories
 {
@@ -43,6 +44,23 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
                 oldCategory.Description = category.Description;
                 
                 await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateCategoryProductsAsync(int categoryId, int productId)
+        {
+            var category = await _context.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.Id ==  categoryId);
+
+            if(category != null)
+            {
+                var product = await _context.Products.FindAsync(productId);
+                if(product != null)
+                {
+                    category.Products.Add(product);
+                    await _context.SaveChangesAsync();
+                }
             }
         }
     }

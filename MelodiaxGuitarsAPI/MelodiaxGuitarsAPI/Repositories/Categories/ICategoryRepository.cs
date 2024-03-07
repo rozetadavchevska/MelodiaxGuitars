@@ -8,5 +8,6 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
         Task<Category> GetCategoryById(int id);
         Task AddCategoryAsync(Category category);
         Task UpdateCategoryAsync(int id, Category category);
+        Task UpdateCategoryProductsAsync(int categoryId, int productId);
     }
 }
