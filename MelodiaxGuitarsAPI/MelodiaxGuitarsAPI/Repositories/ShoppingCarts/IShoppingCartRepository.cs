@@ -8,5 +8,6 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
         Task<ShoppingCart> GetShoppingCartById(int id);
         Task AddShoppingCartAsync(ShoppingCart shoppingCart); 
         Task UpdateShoppingCartAsync(int id, ShoppingCart shoppingCart);
+        Task UpdateShoppingCartItemsAsync(int shoppingCartId, int cartItemId);
     }
 }

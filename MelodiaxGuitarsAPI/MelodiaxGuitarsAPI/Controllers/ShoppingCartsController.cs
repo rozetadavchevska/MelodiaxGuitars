@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Models;
+using MelodiaxGuitarsAPI.Repositories.ShoppingCarts;
+using AutoMapper;
+using MelodiaxGuitarsAPI.DTOs;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -14,95 +17,78 @@ namespace MelodiaxGuitarsAPI.Controllers
     [ApiController]
     public class ShoppingCartsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
+        private readonly IMapper _mapper;
 
-        public ShoppingCartsController(AppDbContext context)
+        public ShoppingCartsController(IShoppingCartRepository shoppingCartRepository, IMapper mapper)
         {
-            _context = context;
+            _shoppingCartRepository = shoppingCartRepository;
+            _mapper = mapper;
         }
 
         // GET: api/ShoppingCarts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShoppingCart>>> GetShoppingCarts()
+        public async Task<ActionResult<IEnumerable<ShoppingCartDto>>> GetShoppingCarts()
         {
-            return await _context.ShoppingCarts.ToListAsync();
+            var shoppingCart = await _shoppingCartRepository.GetAllAsync();
+            var shoppingCartDto = _mapper.Map<List<ShoppingCartDto>>(shoppingCart);
+            return Ok(shoppingCartDto);
         }
 
         // GET: api/ShoppingCarts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShoppingCart>> GetShoppingCart(int id)
+        public async Task<ActionResult<ShoppingCartDto>> GetShoppingCart(int id)
         {
-            var shoppingCart = await _context.ShoppingCarts.FindAsync(id);
+            var shoppingCart = await _shoppingCartRepository.GetShoppingCartById(id);
+            if(shoppingCart == null)
+            {
+                return NotFound();
+            }
+            var shoppingCartDto = _mapper.Map<ShoppingCartDto>(shoppingCart);
+            return Ok(shoppingCartDto);
+        }
 
-            if (shoppingCart == null)
+        // PUT: api/ShoppingCarts/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutShoppingCart(int id, ShoppingCartDto shoppingCartDto)
+        {
+            var shoppingCartToUpdate = await _shoppingCartRepository.GetShoppingCartById(id);
+            if(shoppingCartToUpdate == null)
             {
                 return NotFound();
             }
 
-            return shoppingCart;
-        }
+            var user = _mapper.Map<User>(shoppingCartDto.User);
+            shoppingCartToUpdate.User = user;
 
-        // PUT: api/ShoppingCarts/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutShoppingCart(int id, ShoppingCart shoppingCart)
-        {
-            if (id != shoppingCart.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(shoppingCart).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ShoppingCartExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _shoppingCartRepository.UpdateShoppingCartAsync(id, shoppingCartToUpdate);
             return NoContent();
         }
 
         // POST: api/ShoppingCarts
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ShoppingCart>> PostShoppingCart(ShoppingCart shoppingCart)
+        public async Task<ActionResult<ShoppingCartDto>> PostShoppingCart(ShoppingCartDto shoppingCartDto)
         {
-            _context.ShoppingCarts.Add(shoppingCart);
-            await _context.SaveChangesAsync();
+            var shoppingCart = _mapper.Map<ShoppingCart>(shoppingCartDto);
+            await _shoppingCartRepository.AddShoppingCartAsync(shoppingCart);
 
-            return CreatedAtAction("GetShoppingCart", new { id = shoppingCart.Id }, shoppingCart);
+            var createdShoppingCart = _mapper.Map<ShoppingCartDto>(shoppingCart);
+            return CreatedAtAction(nameof(GetShoppingCart), new { id = shoppingCart.Id }, createdShoppingCart);
         }
 
         // DELETE: api/ShoppingCarts/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShoppingCart(int id)
         {
-            var shoppingCart = await _context.ShoppingCarts.FindAsync(id);
+            var shoppingCart = await _shoppingCartRepository.GetShoppingCartById(id);
             if (shoppingCart == null)
             {
                 return NotFound();
             }
 
-            _context.ShoppingCarts.Remove(shoppingCart);
-            await _context.SaveChangesAsync();
+            await _shoppingCartRepository.DeleteAsync(id);
 
             return NoContent();
-        }
-
-        private bool ShoppingCartExists(int id)
-        {
-            return _context.ShoppingCarts.Any(e => e.Id == id);
         }
     }
 }
