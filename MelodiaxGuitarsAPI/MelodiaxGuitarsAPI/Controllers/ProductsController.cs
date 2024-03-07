@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Models;
+using MelodiaxGuitarsAPI.Repositories.Products;
+using AutoMapper;
+using MelodiaxGuitarsAPI.DTOs;
+using Humanizer;
+using System.Drawing;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -14,95 +19,109 @@ namespace MelodiaxGuitarsAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
 
-        public ProductsController(AppDbContext context)
+        public ProductsController(IProductRepository productRepository, IMapper mapper)
         {
-            _context = context; 
+            _productRepository = productRepository;
+            _mapper = mapper;
         }
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            var product = await _productRepository.GetAllAsync();
+            var productDto = _mapper.Map<List<ProductDto>>(product);
+            return Ok(productDto);
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _productRepository.GetProductById(id);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            return product;
+            var productDto = _mapper.Map<ProductDto>(product);
+            return Ok(productDto);
         }
 
         // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutProduct(int id, ProductDto productDto)
         {
-            if (id != product.Id)
+            var productToUpdate = await _productRepository.GetProductById(id);
+            if(productToUpdate == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            var brand = _mapper.Map<Brand>(productDto.Brand);
+            var category = _mapper.Map<Category>(productDto.Category);\
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            productToUpdate.Brand = brand;
+            productToUpdate.Category = category;
+            productToUpdate.Name = productDto.Name;
+            productToUpdate.Description = productDto.Description;
+            productToUpdate.Model = productDto.Model;
+            productToUpdate.Type = productDto.Type;
+            productToUpdate.Hand = productDto.Hand;
+            productToUpdate.BodyShape = productDto.BodyShape;
+            productToUpdate.Color = productDto.Color;
+            productToUpdate.Top = productDto.Top;
+            productToUpdate.SidesAndBack = productDto.SidesAndBack;
+            productToUpdate.Neck = productDto.Neck;
+            productToUpdate.Nut = productDto.Nut;
+            productToUpdate.Fingerboard = productDto.Fingerboard;
+            productToUpdate.Strings = productDto.Strings;
+            productToUpdate.Tuners = productDto.Tuners;
+            productToUpdate.Bridge = productDto.Bridge;
+            productToUpdate.Controls = productDto.Controls;
+            productToUpdate.Pickups = productDto.Pickups;
+            productToUpdate.PickupSwitch = productDto.PickupSwitch;
+            productToUpdate.Cutaway = productDto.Cutaway;
+            productToUpdate.Pickguard = productDto.Pickguard;
+            productToUpdate.Case = productDto.Case;
+            productToUpdate.ScaleLength = productDto.ScaleLength;
+            productToUpdate.Width = productDto.Width;
+            productToUpdate.Depth = productDto.Depth;
+            productToUpdate.Weight = productDto.Weight;
+            productToUpdate.ImageUrl = productDto.ImageUrl;
 
+            await _productRepository.UpdateProductAsync(id, productToUpdate);
             return NoContent();
         }
 
         // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            var product = _mapper.Map<Product>(productDto);
+            await _productRepository.AddProductAsync(product);
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            var createdProduct = _mapper.Map<ProductDto>(product);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, createdProduct);
         }
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            var productToDelete = await _productRepository.GetProductById(id);
+            if (productToDelete == null)
             {
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            await _productRepository.DeleteAsync(id);
 
             return NoContent();
-        }
-
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

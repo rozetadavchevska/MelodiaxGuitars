@@ -30,7 +30,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
             return product;
         }
 
-        public async Task AddProductAsync(int id, Product product)
+        public async Task AddProductAsync(Product product)
         {
             var newProduct = new Product()
             {
@@ -145,6 +145,23 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
 
                 await _context.SaveChangesAsync();
             }             
+        }
+
+        public async Task UpdateProductOrdersAsync(int productId, int orderProductsId)
+        {
+            var product = await _context.Products
+                .Include(p => p.OrderProducts)
+                .FirstOrDefaultAsync(p => p.Id == productId);
+
+            if(product != null)
+            {
+                var orderProducts = await _context.OrderProducts.FindAsync(orderProductsId);
+                if(orderProducts != null)
+                {
+                    product.OrderProducts.Add(orderProducts);
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
     }
 }
