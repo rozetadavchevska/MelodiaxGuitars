@@ -8,5 +8,6 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
         Task<User> GetUserById(int id);
         Task AddUserAsync(User user);
         Task UpdateUserAsync(int id, User user);
+        Task UpdateUserOrdersAsync(int userId, int orderId);
     }
 }

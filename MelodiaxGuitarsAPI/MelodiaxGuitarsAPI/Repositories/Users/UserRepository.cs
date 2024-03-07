@@ -93,5 +93,22 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateUserOrdersAsync(int userId, int orderId)
+        {
+            var user = await _context.Users
+                .Include(u => u.Orders)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if(user != null)
+            {
+                var order = await _context.Orders.FindAsync(orderId);
+                if(order != null)
+                {
+                    user.Orders.Add(order);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
     }
 }
