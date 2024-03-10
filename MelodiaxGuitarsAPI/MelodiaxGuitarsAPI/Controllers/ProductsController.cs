@@ -63,7 +63,7 @@ namespace MelodiaxGuitarsAPI.Controllers
             }
 
             var brand = _mapper.Map<Brand>(productDto.Brand);
-            var category = _mapper.Map<Category>(productDto.Category);\
+            var category = _mapper.Map<Category>(productDto.Category);
 
             productToUpdate.Brand = brand;
             productToUpdate.Category = category;

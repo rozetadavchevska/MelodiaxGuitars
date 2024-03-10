@@ -1,6 +1,7 @@
 ﻿using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Base;
+using MelodiaxGuitarsAPI.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MelodiaxGuitarsAPI.Repositories.Users
@@ -23,14 +24,17 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
             return user;
         }
 
+        public async Task<User> GetUserByEmail(string email) => await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
         public async Task AddUserAsync(User user)
         {
+            string hashedPassword = PasswordHasher.HashPassword(user.Password);
             var newUser = new User()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Password = user.Password,
+                Password = hashedPassword,
                 Phone = user.Phone,
                 Address = user.Address,
                 City = user.City,

@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "iMl23N2hW8Jg/chK1z68AUeG7DOOW2mrNB3u3NosmXhYUPvD3bUXE40GMEuyHIYgd+qEskbWz936ZP8Gk4sVmg==",
+  "dgSpecHash": "00DVEtDWCjQiJyeJ5TdzAcYGk9f5Fc0eX7j9E/G9Xed52CbNs04gYyPB6N5pkY/lawLYLfqh6ReriKmEAXdlwg==",
   "success": true,
   "projectFilePath": "C:\\Users\\rozet\\OneDrive\\Desktop\\Github Projects\\MelodiaxGuitars\\MelodiaxGuitarsAPI\\MelodiaxGuitarsAPI\\MelodiaxGuitarsAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rozet\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\rozet\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\rozet\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\rozet\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\rozet\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\rozet\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\rozet\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",
