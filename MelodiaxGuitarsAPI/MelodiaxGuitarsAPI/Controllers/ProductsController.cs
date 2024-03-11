@@ -12,6 +12,8 @@ using AutoMapper;
 using MelodiaxGuitarsAPI.DTOs;
 using Humanizer;
 using System.Drawing;
+using MelodiaxGuitarsAPI.Repositories.Brands;
+using MelodiaxGuitarsAPI.Repositories.Categories;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -21,11 +23,15 @@ namespace MelodiaxGuitarsAPI.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        private readonly IBrandRepository _brandRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ProductsController(IProductRepository productRepository, IMapper mapper)
+        public ProductsController(IProductRepository productRepository, IMapper mapper, IBrandRepository brandRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _mapper = mapper;
+            _brandRepository = brandRepository;
+            _categoryRepository = categoryRepository;
         }
 
         // GET: api/Products
@@ -95,6 +101,8 @@ namespace MelodiaxGuitarsAPI.Controllers
             productToUpdate.ImageUrl = productDto.ImageUrl;
 
             await _productRepository.UpdateProductAsync(id, productToUpdate);
+            await _brandRepository.UpdateBrandProductsAsync(productToUpdate.Brand.Id, id);
+            await _categoryRepository.UpdateCategoryProductsAsync(productToUpdate.Category.Id, id);
             return NoContent();
         }
 
@@ -104,6 +112,8 @@ namespace MelodiaxGuitarsAPI.Controllers
         {
             var product = _mapper.Map<Product>(productDto);
             await _productRepository.AddProductAsync(product);
+            await _brandRepository.UpdateBrandProductsAsync(product.Brand.Id, product.Id);
+            await _categoryRepository.UpdateCategoryProductsAsync(product.Category.Id, product.Id);
 
             var createdProduct = _mapper.Map<ProductDto>(product);
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, createdProduct);

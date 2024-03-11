@@ -16,6 +16,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using MelodiaxGuitarsAPI.Repositories.ShoppingCarts;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -25,11 +26,13 @@ namespace MelodiaxGuitarsAPI.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IShoppingCartRepository shoppingCartRepository)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _shoppingCartRepository = shoppingCartRepository;
         }
 
         // GET: api/Users
@@ -90,8 +93,8 @@ namespace MelodiaxGuitarsAPI.Controllers
             user.Password = PasswordHasher.HashPassword(userDto.Password);
             await _userRepository.AddUserAsync(user);
 
-            var cratedUser = _mapper.Map<UserDto>(user);
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, userDto);
+            var createdUser = _mapper.Map<UserDto>(user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, createdUser);
         }
 
         // DELETE: api/Users/5

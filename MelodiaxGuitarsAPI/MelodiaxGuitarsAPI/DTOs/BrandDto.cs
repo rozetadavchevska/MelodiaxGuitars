@@ -1,8 +1,11 @@
-﻿namespace MelodiaxGuitarsAPI.DTOs
+﻿using MelodiaxGuitarsAPI.Models;
+
+namespace MelodiaxGuitarsAPI.DTOs
 {
     public class BrandDto
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public ICollection<ProductDto>? Products { get; set; }
     }
 }

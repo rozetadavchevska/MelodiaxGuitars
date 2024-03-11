@@ -1,6 +1,7 @@
 ﻿using MelodiaxGuitarsAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MelodiaxGuitarsAPI.Data
 {
@@ -12,6 +13,15 @@ namespace MelodiaxGuitarsAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var idProperty = entityType.FindProperty("Id");
+                if (idProperty != null && idProperty.ClrType == typeof(int))
+                {
+                    idProperty.ValueGenerated = ValueGenerated.OnAdd;
+                }
+            }
+
             modelBuilder.Entity<OrderProduct>().HasKey(p => new
             {
                 p.ProductId,
@@ -44,6 +54,12 @@ namespace MelodiaxGuitarsAPI.Data
                 .HasOne(u => u.ShoppingCart)
                 .WithOne(sc => sc.User)
                 .HasForeignKey<ShoppingCart>(sc => sc.UserId);
+
+
+           /* modelBuilder.Entity<ShoppingCart>()
+                .HasOne(sc => sc.User)
+                .WithOne(sc => sc.ShoppingCart)
+                .HasForeignKey<User>(sc => sc.ShoppingCartId);*/
 
             base.OnModelCreating(modelBuilder);
         }

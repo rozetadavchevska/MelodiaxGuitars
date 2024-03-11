@@ -8,8 +8,7 @@ namespace MelodiaxGuitarsAPI.Models
         [Key]
         public int Id { get; set; }
         public int UserId { get; set; }
-        [NotNull]
-        public User User { get; set; } = new User();
+        public User? User { get; set; } 
         public ICollection<OrderProduct>? OrderProducts { get; set; }
         [Required(ErrorMessage = "Subtotal cost is required")]
         public decimal SubtotalCost { get; set; } 

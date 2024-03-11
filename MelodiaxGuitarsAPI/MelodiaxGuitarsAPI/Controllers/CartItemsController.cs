@@ -10,6 +10,8 @@ using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.CartItems;
 using AutoMapper;
 using MelodiaxGuitarsAPI.DTOs;
+using MelodiaxGuitarsAPI.Repositories.ShoppingCarts;
+using System.Security.Claims;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -19,11 +21,13 @@ namespace MelodiaxGuitarsAPI.Controllers
     {
         private readonly ICartItemRepository _cartItemRepository;
         private readonly IMapper _mapper;
+        private readonly IShoppingCartRepository _shoppingCartRepository;
 
-        public CartItemsController(ICartItemRepository cartItemRepository, IMapper mapper)
+        public CartItemsController(ICartItemRepository cartItemRepository, IMapper mapper, IShoppingCartRepository shoppingCartRepository)
         {
             _cartItemRepository = cartItemRepository;
             _mapper = mapper;
+            _shoppingCartRepository = shoppingCartRepository;
         }
 
         // GET: api/CartItems
@@ -75,6 +79,30 @@ namespace MelodiaxGuitarsAPI.Controllers
             var cartItem = _mapper.Map<CartItem>(cartItemDto);
             await _cartItemRepository.AddCartItemAsync(cartItem);
 
+            var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Unauthorized();
+            }
+
+            // Retrieve the shopping cart for the user
+            var shoppingCart = await _shoppingCartRepository.GetShoppingCartByUserId(userId);
+            if (shoppingCart == null)
+            {
+                // Create a new shopping cart if it doesn't exist
+                shoppingCart = new ShoppingCart { UserId = userId };
+                await _shoppingCartRepository.AddShoppingCartAsync(shoppingCart);
+            }
+
+            // Ensure CartItems collection is initialized
+            shoppingCart.CartItems ??= new List<CartItem>();
+
+            // Add the newly created cart item to the shopping cart
+            shoppingCart.CartItems.Add(cartItem);
+
+            // Update the shopping cart in the database
+            await _shoppingCartRepository.UpdateShoppingCartItemsAsync(shoppingCart.Id, cartItem.Id);
+
             var createdCartItem = _mapper.Map<CartItemDto>(cartItem);
 
             return CreatedAtAction(nameof(GetCartItem), new { id = cartItem.Id }, createdCartItem);
@@ -95,4 +123,6 @@ namespace MelodiaxGuitarsAPI.Controllers
             return NoContent();
         }
     }
+
+  
 }

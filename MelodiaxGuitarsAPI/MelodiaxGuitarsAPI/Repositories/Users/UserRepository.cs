@@ -44,6 +44,19 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
 
             await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
+
+            var newShoppingCart = new ShoppingCart
+            {
+                UserId = newUser.Id, 
+                User = newUser
+            };
+
+            await _context.ShoppingCarts.AddAsync(newShoppingCart);
+            await _context.SaveChangesAsync();
+
+            newUser.ShoppingCartId = newShoppingCart.Id;
+            newUser.ShoppingCart = newShoppingCart;
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateUserAsync(int id, User user)
@@ -55,7 +68,6 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
 
             if (oldUser != null)
             {
-                oldUser.Id = user.Id;
                 oldUser.FirstName = user.FirstName;
                 oldUser.LastName = user.LastName;
                 oldUser.Email = user.Email;

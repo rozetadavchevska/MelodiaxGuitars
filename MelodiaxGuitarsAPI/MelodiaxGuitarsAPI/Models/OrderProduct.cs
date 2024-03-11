@@ -8,11 +8,9 @@ namespace MelodiaxGuitarsAPI.Models
         [Key]
         public int Id { get; set; }
         public int OrderId {  get; set; }
-        [NotNull]
-        public Order Order { get; set; } = new Order();
+        public Order? Order { get; set; }
         public int ProductId { get; set; }
-        [NotNull]
-        public Product Product { get; set; } = new Product();
+        public Product? Product { get; set; }
         [Required(ErrorMessage = "Quantity is required")]
         public int Quantity { get; set; }
     }

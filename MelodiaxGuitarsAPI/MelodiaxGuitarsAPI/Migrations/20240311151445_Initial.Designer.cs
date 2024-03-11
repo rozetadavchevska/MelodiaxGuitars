@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MelodiaxGuitarsAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240306170906_Initial")]
+    [Migration("20240311151445_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -34,7 +34,6 @@ namespace MelodiaxGuitarsAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -131,7 +130,10 @@ namespace MelodiaxGuitarsAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");

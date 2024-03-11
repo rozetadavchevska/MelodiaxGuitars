@@ -10,6 +10,7 @@ using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.ShoppingCarts;
 using AutoMapper;
 using MelodiaxGuitarsAPI.DTOs;
+using MelodiaxGuitarsAPI.Repositories.Users;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -19,11 +20,13 @@ namespace MelodiaxGuitarsAPI.Controllers
     {
         private readonly IShoppingCartRepository _shoppingCartRepository;
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
-        public ShoppingCartsController(IShoppingCartRepository shoppingCartRepository, IMapper mapper)
+        public ShoppingCartsController(IShoppingCartRepository shoppingCartRepository, IMapper mapper, IUserRepository userRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         // GET: api/ShoppingCarts
@@ -60,8 +63,10 @@ namespace MelodiaxGuitarsAPI.Controllers
 
             var user = _mapper.Map<User>(shoppingCartDto.User);
             shoppingCartToUpdate.User = user;
+            shoppingCartToUpdate.UserId = user.Id;
 
             await _shoppingCartRepository.UpdateShoppingCartAsync(id, shoppingCartToUpdate);
+            await _userRepository.UpdateUserAsync(user.Id, user);
             return NoContent();
         }
 

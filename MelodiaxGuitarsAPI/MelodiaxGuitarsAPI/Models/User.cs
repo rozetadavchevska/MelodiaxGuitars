@@ -5,7 +5,6 @@ namespace MelodiaxGuitarsAPI.Models
 {
     public class User
     {
-        [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "First name is required")]
         [NotNull]

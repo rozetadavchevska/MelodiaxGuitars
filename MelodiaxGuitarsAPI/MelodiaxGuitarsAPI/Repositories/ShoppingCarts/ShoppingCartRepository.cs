@@ -23,50 +23,52 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
             return shoppingCart;
         }
 
+        public async Task<ShoppingCart> GetShoppingCartByUserId(int userId)
+        {
+            var shoppingCart = await _context.ShoppingCarts
+                .Include(u => u.User)
+                .Include(sc => sc.CartItems)
+                .FirstOrDefaultAsync(sc => sc.UserId == userId);
+
+            return shoppingCart;
+        }
+
         public async Task AddShoppingCartAsync(ShoppingCart shoppingCart)
         {
-            var newShoppingCart = new ShoppingCart()
-            {
-                UserId = shoppingCart.UserId
-            };
-
-            await _context.ShoppingCarts.AddAsync(newShoppingCart);
+            await _context.ShoppingCarts.AddAsync(shoppingCart);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateShoppingCartAsync(int id, ShoppingCart shoppingCart)
         {
             var oldShoppingCart = await _context.ShoppingCarts
-                .Include(u => u.User)
+                .Include(sc => sc.User)
+                .Include(sc => sc.CartItems)
                 .FirstOrDefaultAsync(sc => sc.Id == id);
 
             if (oldShoppingCart != null)
             {
-                oldShoppingCart.Id = shoppingCart.Id;
                 oldShoppingCart.UserId = shoppingCart.Id;
 
                 if(oldShoppingCart.User != null)
                 {
-                    var user = await _context.Users.FindAsync(shoppingCart.User.Id);
+                    var user = await _context.Users.FindAsync(shoppingCart.UserId);
                     if (user != null)
                     {
                         oldShoppingCart.User = user;
                     }
                 }
 
-                if(oldShoppingCart.CartItems != null)
+                foreach (var newItem in shoppingCart.CartItems)
                 {
-                    foreach(var newItem in shoppingCart.CartItems)
+                    var oldItem = oldShoppingCart.CartItems.FirstOrDefault(ci => ci.Id == newItem.Id);
+                    if (oldItem != null)
                     {
-                        var oldItem = oldShoppingCart.CartItems.FirstOrDefault(sc => sc.Id == newItem.Id);
-                        if(oldItem != null)
-                        {
-                            oldItem.Id = newItem.Id;
-                        } 
-                        else
-                        {
-                            oldShoppingCart.CartItems.Add(newItem);
-                        }
+                        oldItem.Quantity = newItem.Quantity;
+                    }
+                    else
+                    {
+                        oldShoppingCart.CartItems.Add(newItem);
                     }
                 }
 

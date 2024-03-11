@@ -15,8 +15,7 @@ namespace MelodiaxGuitarsAPI.Models
         [NotNull]
         public string Description { get; set; } = string.Empty;
         public int BrandId {  get; set; }
-        [NotNull]
-        public Brand Brand { get; set; } = new Brand();
+        public Brand? Brand { get; set; } 
         [AllowNull]
         public string Model { get; set; }
         [AllowNull]
@@ -64,8 +63,7 @@ namespace MelodiaxGuitarsAPI.Models
         [AllowNull]
         public string Weight { get; set; }
         public int CategoryId {  get; set; }
-        [NotNull]
-        public Category Category { get; set; } = new Category();
+        public Category? Category { get; set; }
         [AllowNull]
         public string ImageUrl { get; set; }
         public ICollection<OrderProduct>? OrderProducts { get; set; }
