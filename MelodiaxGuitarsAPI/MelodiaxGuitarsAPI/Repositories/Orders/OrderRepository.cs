@@ -13,7 +13,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
             _context = context;
         }
 
-        public async Task<Order> GetOrderById(int id)
+        public async Task<Order> GetOrderById(string id)
         {
             var order = await _context.Orders
                 .Include(u => u.User)
@@ -38,7 +38,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateOrderAsync(int id, Order order)
+        public async Task UpdateOrderAsync(string id, Order order)
         {
             var oldOrder = await _context.Orders
                 .Include(o => o.User)
@@ -84,7 +84,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
             }
         }
 
-        public async Task UpdateOrderProductAsync(int orderId, int orderProductId)
+        public async Task UpdateOrderProductAsync(string orderId, string orderProductId)
         {
             var order = await _context.Orders
                 .Include(o => o.OrderProducts)

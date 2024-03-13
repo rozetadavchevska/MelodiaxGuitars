@@ -1,0 +1,60 @@
+.register {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 20px 0;
+
+    &-container {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    &-text {
+        margin: 20px 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    &-field {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-question {
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    &-signin {
+        text-decoration: none;
+        color: #8ac21a;
+        font-weight: bold;
+    }
+
+    &-btn {
+        background-color: #8ac21a !important;
+        color: #f5f5f5 !important;
+        font-weight: 500;
+        font-size: 18px;
+        margin:10px;
+    }
+}
+
+@media  screen and (min-width: 978px) {
+    .register{
+        &-container{
+            width: 40%;
+        }
+    }  
+}

@@ -6,10 +6,10 @@ namespace MelodiaxGuitarsAPI.Models
     public class OrderProduct
     {
         [Key]
-        public int Id { get; set; }
-        public int OrderId {  get; set; }
+        public string Id { get; set; }
+        public string OrderId {  get; set; }
         public Order? Order { get; set; }
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         public Product? Product { get; set; }
         [Required(ErrorMessage = "Quantity is required")]
         public int Quantity { get; set; }

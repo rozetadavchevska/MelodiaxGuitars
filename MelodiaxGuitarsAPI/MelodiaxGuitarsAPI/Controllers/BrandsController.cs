@@ -37,7 +37,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/Brands/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BrandDto>> GetBrand(int id)
+        public async Task<ActionResult<BrandDto>> GetBrand(string id)
         {
             var brand = await _brandRepository.GetBrandById(id);
             if (brand == null)
@@ -51,7 +51,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Brands/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBrand(int id, BrandDto brandDto)
+        public async Task<IActionResult> PutBrand(string id, BrandDto brandDto)
         {
             var brandUpdate = await _brandRepository.GetBrandById(id);
             if(brandUpdate == null)
@@ -85,7 +85,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Brands/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBrand(int id)
+        public async Task<IActionResult> DeleteBrand(string id)
         {
             var brandToDelete = await _brandRepository.GetBrandById(id);
             if (brandToDelete == null)

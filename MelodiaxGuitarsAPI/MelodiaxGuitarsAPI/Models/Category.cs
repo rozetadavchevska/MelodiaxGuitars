@@ -6,7 +6,7 @@ namespace MelodiaxGuitarsAPI.Models
     public class Category
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required(ErrorMessage = "Category name is required")]
         [NotNull]
         public string Name { get; set; } = string.Empty;

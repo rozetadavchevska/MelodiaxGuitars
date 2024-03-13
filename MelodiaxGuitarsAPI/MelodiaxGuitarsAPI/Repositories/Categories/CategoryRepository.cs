@@ -13,7 +13,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
         {
             _context = context;
         }
-        public async Task<Category> GetCategoryById(int id)
+        public async Task<Category> GetCategoryById(string id)
         {
             var category = await _context.Categories
                 .Include(p => p.Products)
@@ -34,7 +34,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateCategoryAsync(int id, Category category)
+        public async Task UpdateCategoryAsync(string id, Category category)
         {
             var oldCategory = await _context.Categories.FindAsync(id);
             if(oldCategory != null)
@@ -47,7 +47,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
             }
         }
 
-        public async Task UpdateCategoryProductsAsync(int categoryId, int productId)
+        public async Task UpdateCategoryProductsAsync(string categoryId, string productId)
         {
             var category = await _context.Categories
                 .Include(c => c.Products)

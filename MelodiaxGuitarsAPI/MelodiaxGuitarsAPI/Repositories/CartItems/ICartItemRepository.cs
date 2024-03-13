@@ -5,8 +5,8 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
 {
     public interface ICartItemRepository : IEntityBaseRepository<CartItem>
     {
-        Task<CartItem> GetCartItemById(int id);
+        Task<CartItem> GetCartItemById(string id);
         Task AddCartItemAsync(CartItem item);
-        Task UpdateCartItemAsync(int id, CartItem item);
+        Task UpdateCartItemAsync(string id, CartItem item);
     }
 }

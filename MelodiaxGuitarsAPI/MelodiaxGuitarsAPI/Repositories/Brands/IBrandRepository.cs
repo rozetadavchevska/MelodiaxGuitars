@@ -5,9 +5,9 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
 {
     public interface IBrandRepository : IEntityBaseRepository<Brand>
     {
-        Task<Brand> GetBrandById(int id);
+        Task<Brand> GetBrandById(string id);
         Task AddBrandAsync(Brand brand);
-        Task UpdateBrandAsync(int id, Brand brand);
-        Task UpdateBrandProductsAsync(int brandId, int productId);
+        Task UpdateBrandAsync(string id, Brand brand);
+        Task UpdateBrandProductsAsync(string brandId, string productId);
     }
 }

@@ -18,7 +18,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Base
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string id)
         {
             var entity = await _context.Set<T>().FindAsync(id);
             if(entity != null)
@@ -30,9 +30,9 @@ namespace MelodiaxGuitarsAPI.Repositories.Base
 
         public async Task<IEnumerable<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
 
-        public async Task<T> GetByIdAsync(int id) => await _context.Set<T>().FindAsync(id);
+        public async Task<T> GetByIdAsync(string id) => await _context.Set<T>().FindAsync(id);
 
-        public async Task UpdateAsync(int id, T entity)
+        public async Task UpdateAsync(string id, T entity)
         {
             EntityEntry entityEntry = _context.Entry<T>(entity);
             entityEntry.State = EntityState.Modified;

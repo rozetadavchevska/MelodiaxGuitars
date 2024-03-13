@@ -37,7 +37,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/OrderProducts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<OrderProductDto>> GetOrderProduct(int id)
+        public async Task<ActionResult<OrderProductDto>> GetOrderProduct(string id)
         {
             var orderProduct = await _orderProductRepository.GetOrderProductById(id);
 
@@ -52,7 +52,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/OrderProducts/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderProduct(int id, OrderProductDto orderProductDto)
+        public async Task<IActionResult> PutOrderProduct(string id, OrderProductDto orderProductDto)
         {
             var orderProductToUpdate = await _orderProductRepository.GetOrderProductById(id);
             if (orderProductToUpdate == null)
@@ -84,7 +84,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/OrderProducts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteOrderProduct(int id)
+        public async Task<IActionResult> DeleteOrderProduct(string id)
         {
             var orderProduct = await _orderProductRepository.GetOrderProductById(id);
             if (orderProduct == null)

@@ -6,8 +6,8 @@ namespace MelodiaxGuitarsAPI.Models
     public class Order
     {
         [Key]
-        public int Id { get; set; }
-        public int UserId { get; set; }
+        public string Id { get; set; }
+        public string UserId { get; set; }
         public User? User { get; set; } 
         public ICollection<OrderProduct>? OrderProducts { get; set; }
         [Required(ErrorMessage = "Subtotal cost is required")]

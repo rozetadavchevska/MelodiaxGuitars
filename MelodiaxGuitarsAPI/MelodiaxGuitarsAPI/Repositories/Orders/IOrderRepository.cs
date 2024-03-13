@@ -5,9 +5,9 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
 {
     public interface IOrderRepository : IEntityBaseRepository<Order>
     {
-        Task<Order> GetOrderById(int id);
+        Task<Order> GetOrderById(string id);
         Task AddOrderAsync(Order order);
-        Task UpdateOrderAsync(int id, Order order);
-        Task UpdateOrderProductAsync(int orderId, int orderProductId);
+        Task UpdateOrderAsync(string id, Order order);
+        Task UpdateOrderProductAsync(string orderId, string orderProductId);
     }
 }

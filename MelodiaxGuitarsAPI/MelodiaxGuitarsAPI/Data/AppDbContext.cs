@@ -1,13 +1,13 @@
 ﻿using MelodiaxGuitarsAPI.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MelodiaxGuitarsAPI.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
-        public AppDbContext(DbContextOptions options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
@@ -15,10 +15,13 @@ namespace MelodiaxGuitarsAPI.Data
         {
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                var idProperty = entityType.FindProperty("Id");
-                if (idProperty != null && idProperty.ClrType == typeof(int))
+                var primaryKey = entityType.FindPrimaryKey();
+                if (primaryKey != null)
                 {
-                    idProperty.ValueGenerated = ValueGenerated.OnAdd;
+                    foreach (var property in primaryKey.Properties)
+                    {
+                        property.ValueGenerated = ValueGenerated.OnAdd;
+                    }
                 }
             }
 
@@ -56,11 +59,6 @@ namespace MelodiaxGuitarsAPI.Data
                 .HasForeignKey<ShoppingCart>(sc => sc.UserId);
 
 
-           /* modelBuilder.Entity<ShoppingCart>()
-                .HasOne(sc => sc.User)
-                .WithOne(sc => sc.ShoppingCart)
-                .HasForeignKey<User>(sc => sc.ShoppingCartId);*/
-
             base.OnModelCreating(modelBuilder);
         }
 
@@ -73,6 +71,5 @@ namespace MelodiaxGuitarsAPI.Data
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts {  get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

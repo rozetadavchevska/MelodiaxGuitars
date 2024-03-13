@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace MelodiaxGuitarsAPI.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
         [Required(ErrorMessage = "First name is required")]
         [NotNull]
         public string FirstName { get; set; } = string.Empty;
@@ -16,12 +16,6 @@ namespace MelodiaxGuitarsAPI.Models
         [EmailAddress(ErrorMessage = "Invalid email address")]
         [NotNull]
         public string Email { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Password is required")]
-        [NotNull]
-        public string Password { get; set; } = string.Empty;
-        [Phone]
-        [NotNull]
-        public string Phone { get; set; } = string.Empty;
         [Required(ErrorMessage = "Address is required")]
         [NotNull]
         public string Address { get; set; } = string.Empty;
@@ -32,7 +26,7 @@ namespace MelodiaxGuitarsAPI.Models
         [NotNull]
         public string Country { get; set; } = string.Empty;
         public ICollection<Order>? Orders { get; set; }
-        public int ShoppingCartId { get; set; }
+        public string ShoppingCartId { get; set; }
         public ShoppingCart? ShoppingCart { get; set; }
     }
 }

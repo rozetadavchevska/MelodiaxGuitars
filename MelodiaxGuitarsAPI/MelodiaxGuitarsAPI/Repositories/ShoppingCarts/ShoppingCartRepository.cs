@@ -13,7 +13,7 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
             _context = context;
         }
 
-        public async Task<ShoppingCart> GetShoppingCartById(int id)
+        public async Task<ShoppingCart> GetShoppingCartById(string id)
         {
             var shoppingCart = await _context.ShoppingCarts
                 .Include(u => u.User)
@@ -23,7 +23,7 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
             return shoppingCart;
         }
 
-        public async Task<ShoppingCart> GetShoppingCartByUserId(int userId)
+        public async Task<ShoppingCart> GetShoppingCartByUserId(string userId)
         {
             var shoppingCart = await _context.ShoppingCarts
                 .Include(u => u.User)
@@ -39,7 +39,7 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateShoppingCartAsync(int id, ShoppingCart shoppingCart)
+        public async Task UpdateShoppingCartAsync(string id, ShoppingCart shoppingCart)
         {
             var oldShoppingCart = await _context.ShoppingCarts
                 .Include(sc => sc.User)
@@ -76,7 +76,7 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
             }
         }
 
-        public async Task UpdateShoppingCartItemsAsync(int shoppingCartId, int cartItemId)
+        public async Task UpdateShoppingCartItemsAsync(string shoppingCartId, string cartItemId)
         {
             var shoppingCart = await _context.ShoppingCarts
                 .Include(s => s.CartItems)

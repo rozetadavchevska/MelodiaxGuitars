@@ -41,7 +41,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/CartItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CartItemDto>> GetCartItem(int id)
+        public async Task<ActionResult<CartItemDto>> GetCartItem(string id)
         {
             var cartItem = await _cartItemRepository.GetCartItemById(id);
 
@@ -56,7 +56,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/CartItems/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCartItem(int id, CartItemDto cartItemDto)
+        public async Task<IActionResult> PutCartItem(string id, CartItemDto cartItemDto)
         {
             var cartItemUpdate = await _cartItemRepository.GetCartItemById(id);
             if (cartItemUpdate == null)
@@ -80,27 +80,22 @@ namespace MelodiaxGuitarsAPI.Controllers
             await _cartItemRepository.AddCartItemAsync(cartItem);
 
             var userIdClaim = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
             {
                 return Unauthorized();
             }
 
-            // Retrieve the shopping cart for the user
+            var userId = userIdClaim.Value;
             var shoppingCart = await _shoppingCartRepository.GetShoppingCartByUserId(userId);
             if (shoppingCart == null)
             {
-                // Create a new shopping cart if it doesn't exist
                 shoppingCart = new ShoppingCart { UserId = userId };
                 await _shoppingCartRepository.AddShoppingCartAsync(shoppingCart);
             }
 
-            // Ensure CartItems collection is initialized
             shoppingCart.CartItems ??= new List<CartItem>();
-
-            // Add the newly created cart item to the shopping cart
             shoppingCart.CartItems.Add(cartItem);
 
-            // Update the shopping cart in the database
             await _shoppingCartRepository.UpdateShoppingCartItemsAsync(shoppingCart.Id, cartItem.Id);
 
             var createdCartItem = _mapper.Map<CartItemDto>(cartItem);
@@ -110,7 +105,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/CartItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCartItem(int id)
+        public async Task<IActionResult> DeleteCartItem(string id)
         {
             var cartItemToDelete = await _cartItemRepository.GetCartItemById(id);
             if (cartItemToDelete == null)

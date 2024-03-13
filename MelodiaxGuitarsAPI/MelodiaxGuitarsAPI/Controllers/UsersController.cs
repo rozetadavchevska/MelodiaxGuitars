@@ -26,13 +26,13 @@ namespace MelodiaxGuitarsAPI.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        private readonly IShoppingCartRepository _shoppingCartRepository;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, IShoppingCartRepository shoppingCartRepository)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _mapper = mapper;
-            _shoppingCartRepository = shoppingCartRepository;
+            _configuration = configuration;
         }
 
         // GET: api/Users
@@ -46,7 +46,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
+        public async Task<ActionResult<UserDto>> GetUser(string id)
         {
             var user = await _userRepository.GetUserById(id);
             if (user == null)
@@ -60,7 +60,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, UserDto userDto)
+        public async Task<IActionResult> PutUser(string id, UserDto userDto)
         {
             var userToUpdate = await _userRepository.GetUserById(id);
             if(userToUpdate == null)
@@ -71,14 +71,14 @@ namespace MelodiaxGuitarsAPI.Controllers
             userToUpdate.FirstName = userDto.FirstName;
             userToUpdate.LastName = userDto.LastName;
             userToUpdate.Email = userDto.Email;
-            userToUpdate.Phone = userDto.Phone;
+            userToUpdate.PhoneNumber = userDto.PhoneNumber;
             userToUpdate.Address = userDto.Address;
             userToUpdate.City = userDto.City;
             userToUpdate.Country = userDto.Country;
 
-            if (!string.IsNullOrEmpty(userDto.Password))
+            if (!string.IsNullOrEmpty(userDto.PasswordHash))
             {
-                userToUpdate.Password = PasswordHasher.HashPassword(userDto.Password);
+                userToUpdate.PasswordHash = PasswordHasher.HashPassword(userDto.PasswordHash);
             }
 
             await _userRepository.UpdateUserAsync(id, userToUpdate);
@@ -90,7 +90,7 @@ namespace MelodiaxGuitarsAPI.Controllers
         public async Task<ActionResult<UserDto>> PostUser(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
-            user.Password = PasswordHasher.HashPassword(userDto.Password);
+            user.PasswordHash = PasswordHasher.HashPassword(userDto.PasswordHash);
             await _userRepository.AddUserAsync(user);
 
             var createdUser = _mapper.Map<UserDto>(user);
@@ -99,7 +99,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userRepository.GetUserById(id);
             if (user == null)
@@ -121,7 +121,7 @@ namespace MelodiaxGuitarsAPI.Controllers
                 return Unauthorized("Invalid email or password.");
             }
 
-            if (!PasswordHasher.VerifyPassword(userRequest.Password, user.Password))
+            if (!PasswordHasher.VerifyPassword(userRequest.PasswordHash, user.PasswordHash))
             {
                 return Unauthorized("Invalid email or password.");
             }
@@ -139,7 +139,7 @@ namespace MelodiaxGuitarsAPI.Controllers
                 new Claim(ClaimTypes.Email, userDto.Email)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("3f8d3e58-27ba-4ac4-80e6-d02a5bace9fe"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Token").Value!));
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

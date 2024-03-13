@@ -14,7 +14,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
             _context = context;
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetUserById(string id)
         {
             var user = await _context.Users
                 .Include(s => s.ShoppingCart)
@@ -28,14 +28,14 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
 
         public async Task AddUserAsync(User user)
         {
-            string hashedPassword = PasswordHasher.HashPassword(user.Password);
+            string hashedPassword = PasswordHasher.HashPassword(user.PasswordHash);
             var newUser = new User()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Password = hashedPassword,
-                Phone = user.Phone,
+                PasswordHash = hashedPassword,
+                PhoneNumber = user.PhoneNumber,
                 Address = user.Address,
                 City = user.City,
                 Country = user.Country,
@@ -59,7 +59,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(int id, User user)
+        public async Task UpdateUserAsync(string id, User user)
         {
             var oldUser = await _context.Users
                 .Include(sc => sc.ShoppingCart)
@@ -71,8 +71,8 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
                 oldUser.FirstName = user.FirstName;
                 oldUser.LastName = user.LastName;
                 oldUser.Email = user.Email;
-                oldUser.Password = oldUser.Password;
-                oldUser.Phone = user.Phone;
+                oldUser.PasswordHash = oldUser.PasswordHash;
+                oldUser.PhoneNumber = user.PhoneNumber;
                 oldUser.Address = user.Address;
                 oldUser.City = user.City;
                 oldUser.Country = user.Country;
@@ -110,7 +110,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
             }
         }
 
-        public async Task UpdateUserOrdersAsync(int userId, int orderId)
+        public async Task UpdateUserOrdersAsync(string userId, string orderId)
         {
             var user = await _context.Users
                 .Include(u => u.Orders)

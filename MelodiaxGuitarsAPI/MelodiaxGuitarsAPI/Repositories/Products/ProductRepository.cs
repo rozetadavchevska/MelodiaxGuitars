@@ -4,8 +4,6 @@ using MelodiaxGuitarsAPI.Repositories.Base;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using NuGet.Packaging;
-using NuGet.Packaging.Core;
 using System.Drawing;
 using System.Runtime.Versioning;
 
@@ -19,7 +17,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
             _context = context;
         }
 
-        public async Task<Product> GetProductById(int id)
+        public async Task<Product> GetProductById(string id)
         {
             var product = await _context.Products
                 .Include(b => b.Brand)
@@ -68,7 +66,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateProductAsync(int id, Product product)
+        public async Task UpdateProductAsync(string id, Product product)
         {
             var oldProduct = await _context.Products
                 .Include(b => b.Brand)
@@ -147,7 +145,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
             }             
         }
 
-        public async Task UpdateProductOrdersAsync(int productId, int orderProductsId)
+        public async Task UpdateProductOrdersAsync(string productId, string orderProductsId)
         {
             var product = await _context.Products
                 .Include(p => p.OrderProducts)

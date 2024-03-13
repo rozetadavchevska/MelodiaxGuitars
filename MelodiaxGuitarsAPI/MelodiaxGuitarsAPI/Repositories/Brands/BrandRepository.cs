@@ -13,7 +13,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
             _context = context;
         }
 
-        public async Task<Brand> GetBrandById(int id)
+        public async Task<Brand> GetBrandById(string id)
         {
             var brandDetails = await _context.Brands
                 .Include(p => p.Products)
@@ -40,7 +40,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateBrandAsync(int id, Brand brand)
+        public async Task UpdateBrandAsync(string id, Brand brand)
         {
             var oldBrand = await _context.Brands
                 .Include(b => b.Products)
@@ -71,7 +71,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
             }
         }
 
-        public async Task UpdateBrandProductsAsync(int brandId, int productId)
+        public async Task UpdateBrandProductsAsync(string brandId, string productId)
         {
             var brand = await _context.Brands
                 .Include(b => b.Products)

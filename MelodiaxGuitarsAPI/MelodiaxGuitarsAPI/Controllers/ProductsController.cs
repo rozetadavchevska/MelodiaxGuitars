@@ -10,7 +10,6 @@ using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Products;
 using AutoMapper;
 using MelodiaxGuitarsAPI.DTOs;
-using Humanizer;
 using System.Drawing;
 using MelodiaxGuitarsAPI.Repositories.Brands;
 using MelodiaxGuitarsAPI.Repositories.Categories;
@@ -45,7 +44,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductDto>> GetProduct(int id)
+        public async Task<ActionResult<ProductDto>> GetProduct(string id)
         {
             var product = await _productRepository.GetProductById(id);
 
@@ -60,7 +59,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, ProductDto productDto)
+        public async Task<IActionResult> PutProduct(string id, ProductDto productDto)
         {
             var productToUpdate = await _productRepository.GetProductById(id);
             if(productToUpdate == null)
@@ -121,7 +120,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(string id)
         {
             var productToDelete = await _productRepository.GetProductById(id);
             if (productToDelete == null)

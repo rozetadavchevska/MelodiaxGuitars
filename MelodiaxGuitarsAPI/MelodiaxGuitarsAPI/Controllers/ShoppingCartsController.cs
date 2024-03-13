@@ -40,7 +40,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/ShoppingCarts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShoppingCartDto>> GetShoppingCart(int id)
+        public async Task<ActionResult<ShoppingCartDto>> GetShoppingCart(string id)
         {
             var shoppingCart = await _shoppingCartRepository.GetShoppingCartById(id);
             if(shoppingCart == null)
@@ -53,7 +53,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/ShoppingCarts/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutShoppingCart(int id, ShoppingCartDto shoppingCartDto)
+        public async Task<IActionResult> PutShoppingCart(string id, ShoppingCartDto shoppingCartDto)
         {
             var shoppingCartToUpdate = await _shoppingCartRepository.GetShoppingCartById(id);
             if(shoppingCartToUpdate == null)
@@ -83,7 +83,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/ShoppingCarts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteShoppingCart(int id)
+        public async Task<IActionResult> DeleteShoppingCart(string id)
         {
             var shoppingCart = await _shoppingCartRepository.GetShoppingCartById(id);
             if (shoppingCart == null)

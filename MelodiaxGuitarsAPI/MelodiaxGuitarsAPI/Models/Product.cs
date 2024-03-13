@@ -7,14 +7,14 @@ namespace MelodiaxGuitarsAPI.Models
     public class Product
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required(ErrorMessage = "Product name is required")]
         [NotNull]
         public string Name { get; set; } = string.Empty;
         [Required(ErrorMessage = "Product description is required")]
         [NotNull]
         public string Description { get; set; } = string.Empty;
-        public int BrandId {  get; set; }
+        public string BrandId {  get; set; }
         public Brand? Brand { get; set; } 
         [AllowNull]
         public string Model { get; set; }
@@ -62,7 +62,7 @@ namespace MelodiaxGuitarsAPI.Models
         public string Depth { get; set; }
         [AllowNull]
         public string Weight { get; set; }
-        public int CategoryId {  get; set; }
+        public string CategoryId {  get; set; }
         public Category? Category { get; set; }
         [AllowNull]
         public string ImageUrl { get; set; }

@@ -13,7 +13,7 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
             _context = context;
         }
 
-        public async Task<CartItem> GetCartItemById(int id)
+        public async Task<CartItem> GetCartItemById(string id)
         {
             var cartItem = await _context.CartItems
                 .Include(p => p.Product)
@@ -34,7 +34,7 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateCartItemAsync(int id, CartItem item)
+        public async Task UpdateCartItemAsync(string id, CartItem item)
         {
             var oldItem = await _context.CartItems.FindAsync(id);
             if (oldItem != null)
