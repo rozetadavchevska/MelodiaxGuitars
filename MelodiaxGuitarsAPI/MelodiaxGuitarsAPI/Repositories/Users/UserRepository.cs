@@ -39,7 +39,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
                 Address = user.Address,
                 City = user.City,
                 Country = user.Country,
-                ShoppingCartId = user.ShoppingCartId
+                ShoppingCartId = Guid.NewGuid().ToString()
             };
 
             await _context.Users.AddAsync(newUser);

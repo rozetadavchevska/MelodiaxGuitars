@@ -1,5 +1,6 @@
 using MelodiaxGuitarsAPI.Data;
 using MelodiaxGuitarsAPI.Extensions;
+using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Brands;
 using MelodiaxGuitarsAPI.Repositories.CartItems;
 using MelodiaxGuitarsAPI.Repositories.Categories;
@@ -9,12 +10,17 @@ using MelodiaxGuitarsAPI.Repositories.Products;
 using MelodiaxGuitarsAPI.Repositories.ShoppingCarts;
 using MelodiaxGuitarsAPI.Repositories.Users;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<User>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
@@ -49,6 +55,8 @@ else
 {
     app.UseHsts();
 }
+
+app.MapIdentityApi<User>();
 
 app.UseHttpsRedirection();
 

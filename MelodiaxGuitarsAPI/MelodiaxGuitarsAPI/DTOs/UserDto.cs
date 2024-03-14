@@ -14,6 +14,5 @@ namespace MelodiaxGuitarsAPI.DTOs
         public string Address { get; set; }
         public string City { get; set; } 
         public string Country { get; set; }
-        public ICollection<OrderDto> Orders { get; set; }
     }
 }
