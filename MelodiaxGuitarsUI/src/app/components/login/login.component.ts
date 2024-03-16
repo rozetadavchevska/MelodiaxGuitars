@@ -4,9 +4,9 @@ import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UserService } from '../../services/user/user.service';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { User } from '../../models/User';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,7 @@ import { User } from '../../models/User';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(private userService:UserService){}
+  constructor(private userService:UserService, private authService:AuthService, private router:Router){}
 
   loginForm : FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -40,14 +40,12 @@ export class LoginComponent {
     const formData = this.loginForm.value;
     this.userService.loginUser(formData.email, formData.passwordHash).subscribe({
       next: (response) => {
-        console.log("loged in ", response);
-        console.log(formData.email, formData.passwordHash);
+        this.authService.storeToken(response);
+        console.log('Logged in successfully. Token stored. ', response);
+        this.router.navigate(['/']);
       },
       error: (err) => {
-        console.error("Error ", err);
-        console.log('Error status:', err.status);
-        console.log('Error message:', err.message);
-        console.log(formData.email, formData.passwordHash);
+        console.error("Login failed. ", err);
       }
     })
   }

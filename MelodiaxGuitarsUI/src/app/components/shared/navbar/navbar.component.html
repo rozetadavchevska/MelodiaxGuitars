@@ -18,8 +18,16 @@
         </div>
         <div class="user-actions" [ngClass]="{ 'active': isMenuActive }">
             <ul class="user-actions-list">
-                <li><a routerLink="/register">Register</a></li>
-                <li><a routerLink="/login">Login</a></li>
+                <li *ngIf="!authService.isLoggedIn()"><a routerLink="/register">Register</a></li>
+                <li *ngIf="!authService.isLoggedIn()"><a routerLink="/login">Login</a></li>
+                <li *ngIf="authService.isLoggedIn()">
+                    <a>
+                        <mat-icon class="account-icon">account_circle</mat-icon>
+                    </a>
+                </li>
+                <li *ngIf="authService.isLoggedIn()">
+                    <button mat-button class="logout-btn" (click)="logout()">Logout</button> 
+                </li>
                 <li>
                     <a routerLink="/cart">
                         <mat-icon class="shopping-cart" matBadge="0" matBadgeSize="small" matBadgeColor="warn"  aria-hidden="false">shopping_cart</mat-icon>

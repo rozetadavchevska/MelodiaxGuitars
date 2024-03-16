@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../models/User';
@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
 })
 
 export class RegisterComponent {
-  constructor(private userService:UserService){}
+  constructor(private userService:UserService, private router:Router){}
 
   user:User = {
     firstName: '',
@@ -63,6 +63,7 @@ export class RegisterComponent {
       next: response => {
         console.log('User registration successful', response);
         this.registerForm.reset();
+        this.router.navigate(['/login']);
       },
       error: err => {
         console.error('Error during user registration:', err);

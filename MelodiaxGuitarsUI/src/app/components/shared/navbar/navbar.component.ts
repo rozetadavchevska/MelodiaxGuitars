@@ -5,6 +5,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { CommonModule } from '@angular/common';
 import { AcousticGuitarsComponent } from '../../acoustic-guitars/acoustic-guitars.component';
 import { RouterModule} from '@angular/router';
+import { AuthService } from '../../../services/auth/auth.service';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
@@ -16,14 +18,22 @@ import { RouterModule} from '@angular/router';
     MatBadgeModule, 
     CommonModule,
     AcousticGuitarsComponent,
-    RouterModule],
+    RouterModule,
+    MatButtonModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  constructor(protected authService:AuthService){}
+
   isMenuActive = false;
 
   toggleMenu() {
     this.isMenuActive = !this.isMenuActive;
+  }
+
+  logout(){
+    this.authService.removeToken();
   }
 }
