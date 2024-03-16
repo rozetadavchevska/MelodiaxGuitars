@@ -76,22 +76,29 @@ namespace MelodiaxGuitarsAPI.Controllers
             userToUpdate.City = userDto.City;
             userToUpdate.Country = userDto.Country;
 
-            if (!string.IsNullOrEmpty(userDto.PasswordHash))
-            {
-                userToUpdate.PasswordHash = PasswordHasher.HashPassword(userDto.PasswordHash);
-            }
-
             await _userRepository.UpdateUserAsync(id, userToUpdate);
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Users/register
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> PostUser(UserDto userDto)
         {
+            var existingUser = await _userRepository.GetUserByEmail(userDto.Email);
+
+            if (existingUser != null)
+            {
+                return BadRequest("User with this email already exists.");
+            }
+
+            string role = IsAdminEmail(userDto.Email) ? "Admin" : "User";
+
+            // Create a new user entity
             var user = _mapper.Map<User>(userDto);
             user.PasswordHash = PasswordHasher.HashPassword(userDto.PasswordHash);
-            await _userRepository.AddUserAsync(user);
+
+            // Assign role
+            await _userRepository.AddUserAsync(user, role);
 
             var createdUser = _mapper.Map<UserDto>(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, createdUser);
@@ -113,35 +120,28 @@ namespace MelodiaxGuitarsAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login (User userRequest)
+        public async Task<ActionResult<string>> Login (string email, string passwordHash)
         {
-            var user = await _userRepository.GetUserByEmail(userRequest.Email);
-            if(user == null)
+            var user = await _userRepository.GetUserByEmail(email);
+            if (user == null || !PasswordHasher.VerifyPassword(passwordHash, user.PasswordHash))
             {
                 return Unauthorized("Invalid email or password.");
             }
 
-            if (!PasswordHasher.VerifyPassword(userRequest.PasswordHash, user.PasswordHash))
-            {
-                return Unauthorized("Invalid email or password.");
-            }
-
-            var userEntity = _mapper.Map<UserDto>(user);
-            string token = GenerateToken(userEntity);
-
+            var token = GenerateToken(user);
             return Ok(token);
         }
 
-        private string GenerateToken(UserDto userDto)
+        private string GenerateToken(User user)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, userDto.Email)
+                new Claim(ClaimTypes.Email, user.Email)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt:Token").Value!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Token"]));
 
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                     claims: claims,
@@ -152,6 +152,11 @@ namespace MelodiaxGuitarsAPI.Controllers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
+        }
+
+        private bool IsAdminEmail(string email)
+        {
+            return email.EndsWith("@melodiax.com") && email.StartsWith("admin");
         }
     }
 }

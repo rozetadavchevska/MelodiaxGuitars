@@ -1,0 +1,59 @@
+.login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 20px 0;
+
+    &-form {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    &-text {
+        margin: 20px 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    &-field {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-question {
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    &-register {
+        text-decoration: none;
+        color: #8ac21a;
+        font-weight: bold;
+    }
+
+    &-btn {
+        background-color: #8ac21a !important;
+        color: #f5f5f5 !important;
+        font-weight: 500;
+        font-size: 18px;
+        margin:10px;
+    }
+}
+
+@media  screen and (min-width: 978px) {
+    .login{
+        &-form{
+            width: 40%;
+        }
+    }  
+}

@@ -2,6 +2,7 @@
 using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Base;
 using MelodiaxGuitarsAPI.Utilities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MelodiaxGuitarsAPI.Repositories.Users
@@ -9,9 +10,12 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
     public class UserRepository : EntityBaseRepository<User>, IUserRepository
     {
         private readonly AppDbContext _context;
-        public UserRepository(AppDbContext context) : base(context)
+        private readonly UserManager<User> _userManager;
+
+        public UserRepository(AppDbContext context, UserManager<User> userManager) : base(context)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<User> GetUserById(string id)
@@ -26,20 +30,20 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
 
         public async Task<User> GetUserByEmail(string email) => await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
 
-        public async Task AddUserAsync(User user)
+        public async Task AddUserAsync(User user, string role)
         {
-            string hashedPassword = PasswordHasher.HashPassword(user.PasswordHash);
             var newUser = new User()
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                PasswordHash = hashedPassword,
+                PasswordHash = user.PasswordHash,
                 PhoneNumber = user.PhoneNumber,
                 Address = user.Address,
                 City = user.City,
                 Country = user.Country,
-                ShoppingCartId = Guid.NewGuid().ToString()
+                ShoppingCartId = Guid.NewGuid().ToString(),
+                Role = role
             };
 
             await _context.Users.AddAsync(newUser);
@@ -56,6 +60,9 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
 
             newUser.ShoppingCartId = newShoppingCart.Id;
             newUser.ShoppingCart = newShoppingCart;
+            await _context.SaveChangesAsync();
+
+            await _userManager.AddToRoleAsync(newUser, role);
             await _context.SaveChangesAsync();
         }
 

@@ -154,3 +154,10 @@ C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsA
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\System.Web.Cors.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\System.Net.Http.Formatting.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\System.Web.Http.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\System.Web.Http.Cors.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

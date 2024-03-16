@@ -4,7 +4,6 @@ import { NavbarComponent } from "./components/shared/navbar/navbar.component";
 import { AcousticGuitarsComponent } from './components/acoustic-guitars/acoustic-guitars.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 @Component({

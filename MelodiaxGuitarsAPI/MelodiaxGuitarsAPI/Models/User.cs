@@ -28,5 +28,6 @@ namespace MelodiaxGuitarsAPI.Models
         public ICollection<Order>? Orders { get; set; }
         public string ShoppingCartId { get; set; }
         public ShoppingCart? ShoppingCart { get; set; }
+        public string Role { get; set; }
     }
 }

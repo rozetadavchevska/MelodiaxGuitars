@@ -7,7 +7,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
     {
         Task<User> GetUserById(string id);
         Task<User> GetUserByEmail(string email);
-        Task AddUserAsync(User user);
+        Task AddUserAsync(User user, string role);
         Task UpdateUserAsync(string id, User user);
         Task UpdateUserOrdersAsync(string userId, string orderId);
     }

@@ -1,4 +1,5 @@
 ﻿using MelodiaxGuitarsAPI.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -57,6 +58,12 @@ namespace MelodiaxGuitarsAPI.Data
                 .HasOne(u => u.ShoppingCart)
                 .WithOne(sc => sc.User)
                 .HasForeignKey<ShoppingCart>(sc => sc.UserId);
+
+            modelBuilder.Entity<IdentityRole>()
+                .ToTable("AspNetRoles");
+
+            modelBuilder.Entity<IdentityUserRole<string>>()
+                .ToTable("AspNetUserRoles");
 
 
             base.OnModelCreating(modelBuilder);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BASE_API_URL } from '../../apiUrl';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../../models/User';
+import { LoginUser, User } from '../../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +14,12 @@ export class UserService {
 
   registerUser(user:User) : Observable<User>{
     return this.http.post<User>(this.baseApiUrl + 'api/Users/register', user);
+  }
+
+  loginUser(email: string, passwordHash: string): Observable<string> {
+    return this.http.post('https://localhost:7172/api/Users/login', null, {
+      params: { email, passwordHash },
+      responseType: 'text'
+    });
   }
 }

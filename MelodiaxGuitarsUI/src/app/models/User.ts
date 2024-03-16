@@ -8,3 +8,5 @@ export interface User{
     city:string;
     country:string;
 }
+
+export interface LoginUser extends Pick<User, 'email' | 'passwordHash'> {}
