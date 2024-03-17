@@ -10,6 +10,7 @@ using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Brands;
 using AutoMapper;
 using MelodiaxGuitarsAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -28,6 +29,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/Brands
         [HttpGet]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<ActionResult<IEnumerable<BrandDto>>> GetBrands()
         {
             var brands = await _brandRepository.GetAllAsync();
@@ -37,6 +39,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/Brands/5
         [HttpGet("{id}")]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<ActionResult<BrandDto>> GetBrand(string id)
         {
             var brand = await _brandRepository.GetBrandById(id);
@@ -51,6 +54,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Brands/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutBrand(string id, BrandDto brandDto)
         {
             var brandUpdate = await _brandRepository.GetBrandById(id);
@@ -69,6 +73,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // POST: api/Brands
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BrandDto>> PostBrand(BrandDto brandDto)
         {
             if (!ModelState.IsValid)
@@ -85,6 +90,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Brands/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]    
         public async Task<IActionResult> DeleteBrand(string id)
         {
             var brandToDelete = await _brandRepository.GetBrandById(id);

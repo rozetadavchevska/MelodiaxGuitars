@@ -11,6 +11,7 @@ using MelodiaxGuitarsAPI.Repositories.ShoppingCarts;
 using AutoMapper;
 using MelodiaxGuitarsAPI.DTOs;
 using MelodiaxGuitarsAPI.Repositories.Users;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -71,7 +72,7 @@ namespace MelodiaxGuitarsAPI.Controllers
         }
 
         // POST: api/ShoppingCarts
-        [HttpPost]
+        /*[HttpPost]
         public async Task<ActionResult<ShoppingCartDto>> PostShoppingCart(ShoppingCartDto shoppingCartDto)
         {
             var shoppingCart = _mapper.Map<ShoppingCart>(shoppingCartDto);
@@ -79,10 +80,11 @@ namespace MelodiaxGuitarsAPI.Controllers
 
             var createdShoppingCart = _mapper.Map<ShoppingCartDto>(shoppingCart);
             return CreatedAtAction(nameof(GetShoppingCart), new { id = shoppingCart.Id }, createdShoppingCart);
-        }
+        }*/
 
         // DELETE: api/ShoppingCarts/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteShoppingCart(string id)
         {
             var shoppingCart = await _shoppingCartRepository.GetShoppingCartById(id);

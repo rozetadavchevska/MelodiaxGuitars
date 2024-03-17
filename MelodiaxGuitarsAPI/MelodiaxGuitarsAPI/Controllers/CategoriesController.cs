@@ -10,6 +10,7 @@ using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Categories;
 using AutoMapper;
 using MelodiaxGuitarsAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -51,6 +52,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Categories/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutCategory(string id, CategoryDto categoryDto)
         {
             var categoryToUpdate = await _categoryRepository.GetCategoryById(id);
@@ -69,6 +71,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // POST: api/Categories
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Category>> PostCategory(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
@@ -80,6 +83,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(string id)
         {
             var categoryToDelete = await _categoryRepository.GetCategoryById(id);

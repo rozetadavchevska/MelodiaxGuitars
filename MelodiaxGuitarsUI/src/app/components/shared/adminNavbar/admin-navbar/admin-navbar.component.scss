@@ -1,0 +1,121 @@
+.admin-navbar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;  
+    height: 60px;
+
+    .logo{
+        display: flex;
+        align-items: center;
+        text-align: center;
+        font-size: large;
+        font-weight: bold;
+    }
+
+    .menu-toggle{
+        align-items: center;
+        text-align: center;
+        border-style: none;
+        background-color: #F5F5F5;
+    }
+    
+    .menu{
+        justify-content:space-between;
+        align-items: center;
+
+        &-list{
+            justify-content:space-between;
+            align-items: center;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li{
+                padding: 15px;
+                text-align: center;
+
+                a{
+                    text-decoration: none;
+                    color: black;
+                }
+            }
+        }
+    }
+    
+    .admin-actions{
+        justify-content: space-between;
+        align-items: center;
+
+        &-list{
+            justify-content:space-between;
+            align-items: center;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li{
+                padding: 15px;
+                text-align: center;
+
+                a{
+                    text-decoration: none;
+                    color: black;
+                }
+            }
+        }
+    } 
+}
+
+
+@media screen and (max-width: 978px) {
+    .admin-navbar{
+        flex-direction: column;
+    }
+
+    .logo{
+        display: flex;
+        align-self: flex-start;
+        position: absolute;
+        top:1rem;
+    }
+
+    .menu-toggle {
+        display: flex; 
+        align-self: flex-end;
+        position: absolute;
+        top:1rem;
+    }
+
+    .menu-items {
+        display: none;
+    }
+
+    .menu-items.active {
+        display:block;
+        flex-direction: column;
+        position: relative;
+        top: 3rem;
+        background-color: #F5F5F5;
+        padding: 15px;
+        width: 100%;
+        z-index: 99;
+    } 
+    
+}
+
+@media screen and (min-width: 978px){
+    .menu-toggle{
+        display: none;
+    }
+
+    .menu-items, .menu-list, .user-actions-list {
+        display: flex;
+        align-items: center;
+    }
+
+}

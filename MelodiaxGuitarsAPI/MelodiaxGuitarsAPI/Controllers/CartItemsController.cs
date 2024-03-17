@@ -12,6 +12,7 @@ using AutoMapper;
 using MelodiaxGuitarsAPI.DTOs;
 using MelodiaxGuitarsAPI.Repositories.ShoppingCarts;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {

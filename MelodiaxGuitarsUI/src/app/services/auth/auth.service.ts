@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -6,46 +8,71 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private readonly TOKEN_KEY = 'RyLCdWSwzLP0lNDFOKQYzQzhPkZWmtEM';
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
 
-  isLoggedIn():boolean{
-    return !!localStorage.getItem(this.TOKEN_KEY);
+  private getLocalStorage(): Storage | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage;
+    }
+    return null;
   }
 
-  getToken():string|null{
-    return localStorage.getItem(this.TOKEN_KEY);
+  isLoggedIn(): boolean {
+    const localStorage = this.getLocalStorage();
+    return !!localStorage && !!localStorage.getItem(this.TOKEN_KEY);
   }
 
-  storeToken(token:string):void{
-    localStorage.setItem(this.TOKEN_KEY, token);
+  getToken(): string | null {
+    const localStorage = this.getLocalStorage();
+    return !!localStorage ? localStorage.getItem(this.TOKEN_KEY) : null;
   }
 
-  removeToken():void{
-    localStorage.removeItem(this.TOKEN_KEY);
+  storeToken(token: string): void {
+    const localStorage = this.getLocalStorage();
+    if (!!localStorage) {
+      localStorage.setItem(this.TOKEN_KEY, token);
+    }
   }
 
-  isAuthenticated():boolean{
+  removeToken(): void {
+    const localStorage = this.getLocalStorage();
+    if (!!localStorage) {
+      localStorage.removeItem(this.TOKEN_KEY);
+    }
+  }
+
+  isAdmin():boolean {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      return userRole === 'Admin';
+    }
+    return false; // If there's no token or role is not admin, return false
+  }
+
+  isAuthenticated(): boolean {
     const token = this.getToken();
     return !!token && !!this.isTokenExpired(token);
   }
 
-  private isTokenExpired(token:string):boolean | null{
+  private isTokenExpired(token: string): boolean | null {
     const expirationDate = this.getTokenExpirationDate(token);
     return expirationDate && expirationDate < new Date();
   }
 
-  private getTokenExpirationDate(token:string):Date|null{
+  private getTokenExpirationDate(token: string): Date | null {
     const decodedToken = this.decodeToken(token);
-    if(decodedToken && decodedToken.exp){
+    if (decodedToken && decodedToken.exp) {
       return new Date(decodedToken.exp * 1000);
     }
     return null;
   }
 
-  private decodeToken(token:string):any{
-    try{
+  private decodeToken(token: string): any {
+    try {
       return JSON.parse(atob(token.split('.')[1]));
-    }catch(error){
+    } catch (error) {
       return null;
     }
   }

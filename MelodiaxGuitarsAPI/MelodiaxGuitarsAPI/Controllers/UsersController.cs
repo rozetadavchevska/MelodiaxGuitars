@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using MelodiaxGuitarsAPI.Repositories.ShoppingCarts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -37,6 +38,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/Users
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             var user = await _userRepository.GetAllAsync();
@@ -46,6 +48,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserDto>> GetUser(string id)
         {
             var user = await _userRepository.GetUserById(id);
@@ -60,6 +63,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutUser(string id, UserDto userDto)
         {
             var userToUpdate = await _userRepository.GetUserById(id);
@@ -82,6 +86,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // POST: api/Users/register
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<ActionResult<UserDto>> PostUser(UserDto userDto)
         {
             var existingUser = await _userRepository.GetUserByEmail(userDto.Email);
@@ -106,6 +111,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userRepository.GetUserById(id);
@@ -120,6 +126,7 @@ namespace MelodiaxGuitarsAPI.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<string>> Login (string email, string passwordHash)
         {
             var user = await _userRepository.GetUserByEmail(email);
@@ -127,16 +134,17 @@ namespace MelodiaxGuitarsAPI.Controllers
             {
                 return Unauthorized("Invalid email or password.");
             }
-
-            var token = GenerateToken(user);
+            var role = IsAdminEmail(user.Email) ? "Admin" : "User";
+            var token = GenerateToken(user, role);
             return Ok(token);
         }
 
-        private string GenerateToken(User user)
+        private string GenerateToken(User user, string role)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Token"]));

@@ -13,6 +13,7 @@ using MelodiaxGuitarsAPI.DTOs;
 using System.Drawing;
 using MelodiaxGuitarsAPI.Repositories.Brands;
 using MelodiaxGuitarsAPI.Repositories.Categories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MelodiaxGuitarsAPI.Controllers
 {
@@ -59,6 +60,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutProduct(string id, ProductDto productDto)
         {
             var productToUpdate = await _productRepository.GetProductById(id);
@@ -107,6 +109,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // POST: api/Products
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
@@ -120,6 +123,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(string id)
         {
             var productToDelete = await _productRepository.GetProductById(id);

@@ -42,7 +42,14 @@ export class LoginComponent {
       next: (response) => {
         this.authService.storeToken(response);
         console.log('Logged in successfully. Token stored. ', response);
-        this.router.navigate(['/']);
+        const isAdmin = this.authService.isAdmin();
+        if (isAdmin) {
+          // Redirect to admin dashboard
+          this.router.navigate(['/acoustic']);
+        } else {
+          // Redirect to user dashboard
+          this.router.navigate(['/electric']);
+        }
       },
       error: (err) => {
         console.error("Login failed. ", err);
