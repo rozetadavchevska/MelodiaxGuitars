@@ -98,11 +98,9 @@ namespace MelodiaxGuitarsAPI.Controllers
 
             string role = IsAdminEmail(userDto.Email) ? "Admin" : "User";
 
-            // Create a new user entity
             var user = _mapper.Map<User>(userDto);
             user.PasswordHash = PasswordHasher.HashPassword(userDto.PasswordHash);
 
-            // Assign role
             await _userRepository.AddUserAsync(user, role);
 
             var createdUser = _mapper.Map<UserDto>(user);

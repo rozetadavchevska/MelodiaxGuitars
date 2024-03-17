@@ -30,39 +30,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
 
         public async Task AddProductAsync(Product product)
         {
-            var newProduct = new Product()
-            {
-                Name = product.Name,
-                Description = product.Description,
-                BrandId = product.BrandId,
-                Model = product.Model,
-                Type = product.Type,
-                Hand = product.Hand,
-                BodyShape = product.BodyShape,
-                Color = product.Color,
-                Top = product.Top,
-                SidesAndBack = product.SidesAndBack,
-                Neck = product.Neck,
-                Nut = product.Nut,
-                Fingerboard = product.Fingerboard,
-                Strings = product.Strings,
-                Tuners = product.Tuners,
-                Bridge = product.Bridge,
-                Controls = product.Controls,
-                Pickups = product.Pickups,
-                PickupSwitch = product.PickupSwitch,
-                Cutaway = product.Cutaway,
-                Pickguard = product.Pickguard,
-                Case = product.Case,
-                ScaleLength = product.ScaleLength,
-                Width = product.Width,
-                Depth = product.Depth,
-                Weight = product.Weight,
-                CategoryId = product.CategoryId,
-                ImageUrl = product.ImageUrl
-            };
-
-            await _context.Products.AddAsync(newProduct);
+            await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
         }
 

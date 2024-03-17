@@ -8,6 +8,9 @@ import { AccessoriesComponent } from './components/accessories/accessories.compo
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { BrandsComponent } from './components/brands/brands.component';
+import { ProductsComponent } from './components/products/products.component';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 export const routes: Routes = [
     {path: 'acoustic', component: AcousticGuitarsComponent},
@@ -19,4 +22,7 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent},
     {path: 'cart', component: ShoppingCartComponent},
+    {path: 'brands', component: BrandsComponent},
+    {path: 'products', component:ProductsComponent},
+    {path: 'categories', component: CategoriesComponent}
 ];

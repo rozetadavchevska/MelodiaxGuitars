@@ -24,13 +24,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
 
         public async Task AddCategoryAsync(Category category)
         {
-            var newCategory = new Category()
-            {
-                Name = category.Name,
-                Description = category.Description
-            };
-
-            await _context.Categories.AddAsync(newCategory);
+            await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
         }
 

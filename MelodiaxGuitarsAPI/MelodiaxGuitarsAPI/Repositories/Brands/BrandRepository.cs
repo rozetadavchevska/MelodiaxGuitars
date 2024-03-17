@@ -25,18 +25,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
 
         public async Task AddBrandAsync(Brand brand)
         {
-            if (brand == null)
-            {
-                throw new ArgumentNullException(nameof(brand), "Brand object cannot be null.");
-            }
-
-            var newBrand = new Brand()
-            {
-                Name = brand.Name,
-                Description = brand.Description
-            };
-
-            await _context.Brands.AddAsync(newBrand);
+            await _context.Brands.AddAsync(brand);
             await _context.SaveChangesAsync();
         }
 

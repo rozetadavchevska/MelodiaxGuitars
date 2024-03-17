@@ -38,7 +38,7 @@ namespace MelodiaxGuitarsAPI.Controllers
         }
 
         // GET: api/Brands/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = nameof(GetBrand))]
         /*[Authorize(Roles = "Admin")]*/
         public async Task<ActionResult<BrandDto>> GetBrand(string id)
         {
@@ -58,7 +58,7 @@ namespace MelodiaxGuitarsAPI.Controllers
         public async Task<IActionResult> PutBrand(string id, BrandDto brandDto)
         {
             var brandUpdate = await _brandRepository.GetBrandById(id);
-            if(brandUpdate == null)
+            if (brandUpdate == null)
             {
                 return NotFound();
             }
@@ -73,24 +73,19 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // POST: api/Brands
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<BrandDto>> PostBrand(BrandDto brandDto)
+        /*[Authorize(Roles = "Admin")]*/
+        public async Task<IActionResult> PostBrand(BrandDto brandDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             var brand = _mapper.Map<Brand>(brandDto);
             await _brandRepository.AddBrandAsync(brand);
 
-            var createdBrandDto = _mapper.Map<BrandDto>(brand);
-
-            return CreatedAtAction(nameof(GetBrand), new { id = brand.Id }, createdBrandDto);
+            var createdBrand = _mapper.Map<BrandDto>(brand);
+            return CreatedAtRoute("GetBrand", new { id = brand.Id }, createdBrand);
         }
 
         // DELETE: api/Brands/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]    
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteBrand(string id)
         {
             var brandToDelete = await _brandRepository.GetBrandById(id);
@@ -104,3 +99,4 @@ namespace MelodiaxGuitarsAPI.Controllers
         }
     }
 }
+

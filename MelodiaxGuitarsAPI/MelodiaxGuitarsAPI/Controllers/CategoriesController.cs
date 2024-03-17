@@ -71,7 +71,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // POST: api/Categories
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<ActionResult<Category>> PostCategory(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
