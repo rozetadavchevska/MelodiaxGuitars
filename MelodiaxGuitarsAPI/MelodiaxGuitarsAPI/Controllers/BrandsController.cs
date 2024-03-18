@@ -77,6 +77,7 @@ namespace MelodiaxGuitarsAPI.Controllers
         public async Task<IActionResult> PostBrand(BrandDto brandDto)
         {
             var brand = _mapper.Map<Brand>(brandDto);
+            brand.Id = Guid.NewGuid().ToString();
             await _brandRepository.AddBrandAsync(brand);
 
             var createdBrand = _mapper.Map<BrandDto>(brand);

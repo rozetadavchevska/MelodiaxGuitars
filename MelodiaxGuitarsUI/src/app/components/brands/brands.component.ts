@@ -9,7 +9,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-brands',
@@ -31,14 +30,14 @@ import { Router } from '@angular/router';
   styleUrl: './brands.component.scss'
 })
 export class BrandsComponent implements OnInit{
-  constructor(private brandService:BrandService, private router:Router){}
+  constructor(private brandService:BrandService){}
 
   displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   dataSource: Brand[] = [];
   editingBrandId:string | null = null;
-  brandId: string = '';
+  showAddFormFlag: boolean = false;
 
-  editForm: FormGroup = new FormGroup ({
+  form: FormGroup = new FormGroup ({
     name: new FormControl('', [Validators.required]),
     description: new FormControl(''),
   })
@@ -56,6 +55,31 @@ export class BrandsComponent implements OnInit{
         console.error('Error fetching brands: ', error);
       }
     )
+  }
+
+  showAddForm() {
+    this.showAddFormFlag = true;
+  }
+
+  addBrand() {
+    if (this.form == null) {
+      return;
+    }
+
+    const formData = this.form.value;
+    this.brandService.addBrand(formData).subscribe({
+      next: () => {
+        this.loadBrands();
+        this.showAddFormFlag = false;
+      },
+      error: err => {
+        console.error('Error adding brand ', err);
+      }
+    })
+  }
+
+  cancelAdd() {
+    this.showAddFormFlag = false;
   }
 
   editBrand(id:string){
@@ -80,11 +104,11 @@ export class BrandsComponent implements OnInit{
   }
 
   saveBrandChanges():void{
-    if (this.editForm == null || this.editingBrandId == null) {
+    if (this.form == null || this.editingBrandId == null) {
       return;
     }
 
-    const formData = this.editForm.value;
+    const formData = this.form.value;
     this.brandService.updateBrand(this.editingBrandId, formData).subscribe(
       () => {
         const index = this.dataSource.findIndex(brand => brand.id === this.editingBrandId);

@@ -16,6 +16,15 @@ export class BrandService {
     return this.http.get<Brand[]>(this.baseApiUrl + 'api/Brands');
   }
 
+  addBrand(brandDto:Brand):Observable<Brand>{
+    const body = {
+      id: '',
+      name: brandDto.name,
+      description: brandDto.description
+    };
+    return this.http.post<Brand>(this.baseApiUrl + 'api/Brands', body);
+  }
+
   updateBrand(id: string, brandDto: Brand): Observable<Brand> {
     const body = {
       id: id,

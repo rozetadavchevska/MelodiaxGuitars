@@ -1,55 +1,77 @@
 <div class="brands">
-    <p class="brands-text">Brands</p>
-
-    <div *ngIf="editingBrandId" class="edit-form">
-      <h2>Edit Brand</h2>
-      <form [formGroup]="editForm" (ngSubmit)="saveBrandChanges()">
-          <mat-form-field appearance="outline" class="form-field">
-              <mat-label>Name</mat-label>
-              <input matInput formControlName="name">
-          </mat-form-field>
-          <mat-form-field appearance="outline" class="form-field">
-              <mat-label>Description</mat-label>
-              <textarea matInput formControlName="description"></textarea>
-          </mat-form-field>
-          <div class="button-group">
-              <button mat-raised-button color="primary" type="submit">Save</button>
-              <button mat-raised-button type="button" (click)="cancelEdit()">Cancel</button>
-          </div>
-      </form>
-    </div>
-
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> Id </th>
-        <td mat-cell *matCellDef="let brand"> {{brand.id}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let brand"> {{brand.name}} </td>
-      </ng-container>
+  <div class="brands-header">
+    <h2 class="brands-text">Brands</h2>
+    <button mat-raised-button color="primary" (click)="showAddForm()">Add New</button>
+  </div>
     
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef> Description </th>
-        <td mat-cell *matCellDef="let brand"> {{brand.description}} </td>
-      </ng-container>
+  <div *ngIf="showAddFormFlag" class="add-form">
+    <h2>Add New Brand</h2>
+    <form [formGroup]="form" (ngSubmit)="addBrand()">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+      <div class="button-group">
+        <button mat-raised-button color="primary" type="submit">Save</button>
+        <button mat-raised-button type="button" (click)="cancelAdd()">Cancel</button>
+      </div>
+    </form>
+  </div>
 
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let brand">
-          <button mat-icon-button color="primary" (click)="editBrand(brand.id)">
-              <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteBrand(brand.id)">
-              <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
 
-    </table>  
+  <div *ngIf="editingBrandId" class="edit-form">
+    <h2>Edit Brand</h2>
+    <form [formGroup]="form" (ngSubmit)="saveBrandChanges()">
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+        <div class="button-group">
+            <button mat-raised-button color="primary" type="submit">Save</button>
+            <button mat-raised-button type="button" (click)="cancelEdit()">Cancel</button>
+        </div>
+    </form>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Id </th>
+      <td mat-cell *matCellDef="let brand"> {{brand.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let brand"> {{brand.name}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let brand"> {{brand.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let brand">
+        <button mat-icon-button color="primary" (click)="editBrand(brand.id)">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteBrand(brand.id)">
+            <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+  </table>  
 </div>

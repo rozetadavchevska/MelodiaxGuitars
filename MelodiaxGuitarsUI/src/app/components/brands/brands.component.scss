@@ -1,16 +1,28 @@
 .brands {
     margin-bottom: 20px;
+    width: 100%;
+
+    &-header{
+        display: flex;
+        align-items: center;
+        margin: 10px;
+
+        button{
+            margin: 10px;
+        }
+    }
 }
 
-.edit-form {
+.edit-form, .add-form {
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px #0000001a;
     margin-top: 20px;
+    margin: 10px;
 }
 
-.edit-form h2 {
+.edit-form h2 , .add-form h2 {
     margin-bottom: 20px;
 }
 
