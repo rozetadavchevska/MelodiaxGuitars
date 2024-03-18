@@ -15,4 +15,12 @@ export class BrandService {
   getBrands():Observable<Brand[]>{
     return this.http.get<Brand[]>(this.baseApiUrl + 'api/Brands');
   }
+
+  updateBrand(id:string,brand:Brand):Observable<Brand>{
+    return this.http.put<Brand>(this.baseApiUrl + 'api/Brands', {id ,brand});
+  }
+
+  deleteBrand(id:string):Observable<any>{
+    return this.http.delete<any>(this.baseApiUrl + `api/Brands/${id}`);
+  }
 }

@@ -85,7 +85,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Brands/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> DeleteBrand(string id)
         {
             var brandToDelete = await _brandRepository.GetBrandById(id);

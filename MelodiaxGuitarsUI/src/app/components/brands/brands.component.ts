@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import { Brand } from '../../models/Brand';
 import { BrandService } from '../../services/brand/brand.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-brands',
   standalone: true,
   imports: [
-    MatTableModule
+    MatTableModule,
+    MatButtonModule,
   ],
   templateUrl: './brands.component.html',
   styleUrl: './brands.component.scss'
@@ -15,7 +17,7 @@ import { BrandService } from '../../services/brand/brand.service';
 export class BrandsComponent implements OnInit{
   constructor(private brandService:BrandService){}
 
-  displayedColumns: string[] = ['name', 'description'];
+  displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   dataSource: Brand[] = [];
 
   ngOnInit(): void {
@@ -31,5 +33,22 @@ export class BrandsComponent implements OnInit{
         console.error('Error fetching brands: ', error);
       }
     )
+  }
+
+  editBrand(brand:Brand){
+
+  }
+
+  deleteBrand(id:string): void{
+    if(confirm('Are you sure you want to delete this brand?')){
+      this.brandService.deleteBrand(id).subscribe(
+        ()=>{
+          this.dataSource = this.dataSource.filter(brand => brand.id !== id);
+        },
+        (error) => {
+          console.error('Error deleting brand: ', error);
+        }
+      )
+    }
   }
 }
