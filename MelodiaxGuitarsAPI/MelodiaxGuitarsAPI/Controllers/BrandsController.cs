@@ -54,7 +54,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Brands/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> PutBrand(string id, BrandDto brandDto)
         {
             var brandUpdate = await _brandRepository.GetBrandById(id);
@@ -67,7 +67,7 @@ namespace MelodiaxGuitarsAPI.Controllers
             brandUpdate.Description = brandDto.Description;
 
             await _brandRepository.UpdateBrandAsync(id, brandUpdate);
-
+            
             return NoContent();
         }
 

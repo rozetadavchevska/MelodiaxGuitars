@@ -3,6 +3,13 @@ import {MatTableModule} from '@angular/material/table';
 import { Brand } from '../../models/Brand';
 import { BrandService } from '../../services/brand/brand.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { HttpClientModule } from '@angular/common/http';
+import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-brands',
@@ -10,15 +17,31 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     MatTableModule,
     MatButtonModule,
+    MatIconModule,
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatLabel,
+    MatFormField,
+    MatFormFieldModule,
+    HttpClientModule,
+    MatInputModule,
   ],
   templateUrl: './brands.component.html',
   styleUrl: './brands.component.scss'
 })
 export class BrandsComponent implements OnInit{
-  constructor(private brandService:BrandService){}
+  constructor(private brandService:BrandService, private router:Router){}
 
   displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   dataSource: Brand[] = [];
+  editingBrandId:string | null = null;
+  brandId: string = '';
+
+  editForm: FormGroup = new FormGroup ({
+    name: new FormControl('', [Validators.required]),
+    description: new FormControl(''),
+  })
 
   ngOnInit(): void {
     this.loadBrands();
@@ -26,7 +49,7 @@ export class BrandsComponent implements OnInit{
 
   loadBrands():void{
     this.brandService.getBrands().subscribe(
-      (brands:Brand[]) => {
+      (brands) => {
         this.dataSource = brands;
       },
       (error) => {
@@ -35,8 +58,12 @@ export class BrandsComponent implements OnInit{
     )
   }
 
-  editBrand(brand:Brand){
+  editBrand(id:string){
+    this.editingBrandId = id;
+  }
 
+  cancelEdit():void{
+    this.editingBrandId = null;
   }
 
   deleteBrand(id:string): void{
@@ -50,5 +77,27 @@ export class BrandsComponent implements OnInit{
         }
       )
     }
+  }
+
+  saveBrandChanges():void{
+    if (this.editForm == null || this.editingBrandId == null) {
+      return;
+    }
+
+    const formData = this.editForm.value;
+    this.brandService.updateBrand(this.editingBrandId, formData).subscribe(
+      () => {
+        const index = this.dataSource.findIndex(brand => brand.id === this.editingBrandId);
+        if (index !== -1) {
+          this.dataSource[index] = formData;
+        }
+
+        this.loadBrands();
+        this.editingBrandId = null;
+      },
+      (err) => {
+        console.error('Error updating brand:', err);
+      }
+    );
   }
 }
