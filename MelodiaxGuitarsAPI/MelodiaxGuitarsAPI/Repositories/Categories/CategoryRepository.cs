@@ -32,11 +32,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
         {
             var oldCategory = await _context.Categories.FindAsync(id);
             if(oldCategory != null)
-            {
-                oldCategory.Id = category.Id;
-                oldCategory.Name = category.Name;
-                oldCategory.Description = category.Description;
-                
+            {   
                 await _context.SaveChangesAsync();
             }
         }

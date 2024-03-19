@@ -25,6 +25,14 @@ export class CategoryService {
     return this.http.post<Category>(this.baseApiUrl + 'api/Categories', body);
   }
 
+  updateCategory(id:string, category:Category): Observable<Category>{
+    const body = {
+      id: id,
+      name: category.name,
+      description: category.description,
+    }
+    return this.http.put<Category>(this.baseApiUrl + `api/Categories/${id}`, body);
+  }
 
   deleteCategory(id:string):Observable<any>{
     return this.http.delete<any>(this.baseApiUrl + `api/Categories/${id}`)

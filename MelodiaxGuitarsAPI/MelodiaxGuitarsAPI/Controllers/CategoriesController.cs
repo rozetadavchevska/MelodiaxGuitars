@@ -56,7 +56,6 @@ namespace MelodiaxGuitarsAPI.Controllers
         public async Task<IActionResult> PutCategory(string id, CategoryDto categoryDto)
         {
             var categoryToUpdate = await _categoryRepository.GetCategoryById(id);
-
             if (categoryToUpdate == null)
             {
                 return NotFound();

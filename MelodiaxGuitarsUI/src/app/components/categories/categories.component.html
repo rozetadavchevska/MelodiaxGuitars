@@ -22,8 +22,22 @@
         </form>
     </div>
 
-    <div >
-
+    <div *ngIf="editingCategoryId" class="edit-form">
+        <h2>Edit Category</h2>
+        <form [formGroup]="form" (ngSubmit)="saveCategoryChanges()">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Description</mat-label>
+                <input matInput formControlName="description">
+            </mat-form-field>
+            <div class="button-group">
+                <button mat-raised-button color="primary" type="submit">Save</button>
+                <button mat-raised-button (click)="cancelEdit()">Cancel</button>
+            </div>
+        </form>
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">

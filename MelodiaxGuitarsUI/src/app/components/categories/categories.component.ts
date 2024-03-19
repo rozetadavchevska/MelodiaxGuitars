@@ -34,6 +34,7 @@ export class CategoriesComponent implements OnInit{
   displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   dataSource: Category[] = [];
   showAddFormFlag: boolean = false;
+  editingCategoryId: string | null = null;
 
   form: FormGroup = new FormGroup ({
     name: new FormControl('', [Validators.required]),
@@ -78,7 +79,11 @@ export class CategoriesComponent implements OnInit{
   }
 
   editCategory(id:string){
+    this.editingCategoryId = id;
+  }
 
+  cancelEdit(){
+    this.editingCategoryId = null;
   }
   
   deleteCategory(id:string){
@@ -92,5 +97,27 @@ export class CategoriesComponent implements OnInit{
         }
       )
     }
+  }
+
+  saveCategoryChanges():void{
+    if(this.editingCategoryId == null || this.form == null){
+      return;
+    }
+
+    const formData = this.form.value;
+    this.categoryService.updateCategory(this.editingCategoryId,formData).subscribe(
+      () => {
+        const index = this.dataSource.findIndex(category => category.id == this.editingCategoryId);
+        if(index !== -1){
+          this.dataSource[index] = formData;
+        }
+
+        this.loadCategories();
+        this.editingCategoryId = null;
+      },
+      (error) => {
+        console.error('Error updateing category: ', error);
+      } 
+    )
   }
 }
