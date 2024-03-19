@@ -51,9 +51,9 @@ export class BrandsComponent implements OnInit{
       (brands) => {
         this.dataSource = brands;
       },
-      (error) => {
-        console.error('Error fetching brands: ', error);
-      }
+      // (error) => {
+      //   console.error('Error fetching brands: ', error);
+      // }
     )
   }
 

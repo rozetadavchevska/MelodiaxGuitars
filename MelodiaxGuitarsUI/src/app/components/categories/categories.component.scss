@@ -1,0 +1,40 @@
+.categories {
+    margin-bottom: 20px;
+    width: 100%;
+
+    &-header{
+        display: flex;
+        align-items: center;
+        margin: 10px;
+
+        button{
+            margin: 10px;
+        }
+    }
+}
+
+.edit-form, .add-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #0000001a;
+    margin-top: 20px;
+    margin: 10px;
+}
+
+.edit-form h2 , .add-form h2 {
+    margin-bottom: 20px;
+}
+
+.form-field {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.button-group {
+    margin-top: 20px;
+}
+
+.button-group button {
+    margin-right: 10px;
+}
