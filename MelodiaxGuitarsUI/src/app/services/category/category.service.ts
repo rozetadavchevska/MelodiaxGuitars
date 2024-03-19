@@ -16,6 +16,14 @@ export class CategoryService {
     return this.http.get<Category[]>(this.baseApiUrl + 'api/Categories');
   }
 
+  addCategory(category:Category): Observable<Category>{
+    const body = {
+      id: '',
+      name: category.name,
+      description: category.description
+    };
+    return this.http.post<Category>(this.baseApiUrl + 'api/Categories', body);
+  }
 
 
   deleteCategory(id:string):Observable<any>{

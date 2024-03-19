@@ -1,16 +1,30 @@
 <div class="categories">
     <div class="categories-header">
         <h2 class="categories-text">Categories</h2>
-        <button mat-raised-button color="primary">Add New</button>
+        <button mat-raised-button color="primary" (click)="showAddForm()">Add New</button>
     </div>
 
-    <!-- <div >
-
+    <div *ngIf="showAddFormFlag" class="add-form">
+        <h2>Add New Category</h2>
+        <form [formGroup]="form" (ngSubmit)="addCategory()">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Description</mat-label>
+                <input matInput formControlName="description">
+            </mat-form-field>
+            <div class="button-group">
+                <button mat-raised-button color="primary" type="submit">Save</button>
+                <button mat-raised-button (click)="cancelAdd()">Cancel</button>
+            </div>
+        </form>
     </div>
 
     <div >
 
-    </div> -->
+    </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

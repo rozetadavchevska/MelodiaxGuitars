@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { Category } from '../../models/Category';
@@ -33,6 +33,12 @@ export class CategoriesComponent implements OnInit{
 
   displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   dataSource: Category[] = [];
+  showAddFormFlag: boolean = false;
+
+  form: FormGroup = new FormGroup ({
+    name: new FormControl('', [Validators.required]),
+    description: new FormControl(''),
+  })
 
   ngOnInit(): void {
     this.loadCategories();
@@ -44,6 +50,31 @@ export class CategoriesComponent implements OnInit{
         this.dataSource = categories;
       },
     )
+  }
+
+  showAddForm(){
+    this.showAddFormFlag = true;
+  }
+
+  addCategory(){
+    if(this.form == null){
+      return;
+    }
+
+    const formData = this.form.value;
+    this.categoryService.addCategory(formData).subscribe({
+      next: () => {
+        this.loadCategories();
+        this.showAddFormFlag = false;
+      },
+      error: err => {
+        console.error('Error adding category ', err);
+      }
+    })
+  }
+
+  cancelAdd(){
+    this.showAddFormFlag = false;
   }
 
   editCategory(id:string){

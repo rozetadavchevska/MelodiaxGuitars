@@ -75,6 +75,7 @@ namespace MelodiaxGuitarsAPI.Controllers
         public async Task<ActionResult<Category>> PostCategory(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
+            category.Id = Guid.NewGuid().ToString();
             await _categoryRepository.AddCategoryAsync(category);
             var createdCategory = _mapper.Map<CategoryDto>(category);
 
