@@ -60,8 +60,8 @@ namespace MelodiaxGuitarsAPI.Controllers
                 return NotFound();
             }
 
-            var product = _mapper.Map<Product>(orderProductDto.Product);
-            var order = _mapper.Map<Order>(orderProductDto.Order);
+            var product = _mapper.Map<Product>(orderProductDto.ProductId);
+            var order = _mapper.Map<Order>(orderProductDto.OrderId);
             orderProductToUpdate.Product = product;
             orderProductToUpdate.Order = order;
             orderProductToUpdate.Quantity = orderProductToUpdate.Quantity;

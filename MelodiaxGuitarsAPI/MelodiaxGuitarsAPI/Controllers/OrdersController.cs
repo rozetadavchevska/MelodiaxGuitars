@@ -60,7 +60,7 @@ namespace MelodiaxGuitarsAPI.Controllers
                 return NotFound();
             }
 
-            var user = _mapper.Map<User>(orderDto.User);
+            var user = _mapper.Map<User>(orderDto.UserId);
             orderToUpdate.User = user;
             orderToUpdate.SubtotalCost = orderDto.SubtotalCost;
             orderToUpdate.Shipping = orderDto.Shipping;

@@ -65,7 +65,7 @@ namespace MelodiaxGuitarsAPI.Controllers
                 return NotFound();
             }
 
-            var product = _mapper.Map<Product>(cartItemDto.Product);
+            var product = _mapper.Map<Product>(cartItemDto.ProductId);
             cartItemUpdate.Product = product;
             cartItemUpdate.Quantity = cartItemDto.Quantity;
 

@@ -5,8 +5,8 @@ namespace MelodiaxGuitarsAPI.DTOs
 {
     public class OrderProductDto
     {
-        public OrderDto Order { get; set; } 
-        public ProductDto Product { get; set; }
+        public required string OrderId { get; set; } 
+        public required string ProductId { get; set; }
         public int Quantity { get; set; }
     }
 }

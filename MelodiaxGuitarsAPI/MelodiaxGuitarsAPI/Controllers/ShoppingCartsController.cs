@@ -62,7 +62,7 @@ namespace MelodiaxGuitarsAPI.Controllers
                 return NotFound();
             }
 
-            var user = _mapper.Map<User>(shoppingCartDto.User);
+            var user = _mapper.Map<User>(shoppingCartDto.UserId);
             shoppingCartToUpdate.User = user;
             shoppingCartToUpdate.UserId = user.Id;
 

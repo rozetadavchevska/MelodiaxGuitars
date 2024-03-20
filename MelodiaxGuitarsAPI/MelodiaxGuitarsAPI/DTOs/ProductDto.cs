@@ -5,33 +5,33 @@ namespace MelodiaxGuitarsAPI.DTOs
 {
     public class ProductDto
     {
-        public string Name { get; set; }
-        public string Description { get; set; } 
-        public string BrandId { get; set; }
-        public string Model { get; set; }
-        public string Type { get; set; }
-        public string Hand { get; set; }
-        public string BodyShape { get; set; }
-        public string Color { get; set; }
-        public string Top { get; set; }
-        public string SidesAndBack { get; set; }
-        public string Neck { get; set; }
-        public string Nut { get; set; }
-        public string Fingerboard { get; set; }
-        public string Strings { get; set; }
-        public string Tuners { get; set; }
-        public string Bridge { get; set; }
-        public string Controls { get; set; }
-        public string Pickups { get; set; }
-        public string PickupSwitch { get; set; }
+        public required string Name { get; set; }
+        public required string Description { get; set; } 
+        public required string BrandId { get; set; }
+        public string Model { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
+        public string Hand { get; set; } = string.Empty;
+        public string BodyShape { get; set; } = string.Empty;
+        public string Color { get; set; } = string.Empty;
+        public string Top { get; set; } = string.Empty;
+        public string SidesAndBack { get; set; } = string.Empty;
+        public string Neck { get; set; } = string.Empty;
+        public string Nut { get; set; } = string.Empty;
+        public string Fingerboard { get; set; } = string.Empty;
+        public string Strings { get; set; } = string.Empty;
+        public string Tuners { get; set; } = string.Empty;
+        public string Bridge { get; set; } = string.Empty;
+        public string Controls { get; set; } = string.Empty;
+        public string Pickups { get; set; } = string.Empty;
+        public string PickupSwitch { get; set; } = string.Empty;
         public bool Cutaway { get; set; }
-        public string Pickguard { get; set; }
-        public string Case { get; set; }
-        public string ScaleLength { get; set; }
-        public string Width { get; set; }
-        public string Depth { get; set; }
-        public string Weight { get; set; }
-        public string CategoryId { get; set; }
-        public string ImageUrl { get; set; }
+        public string Pickguard { get; set; } = string.Empty;
+        public string Case { get; set; } = string.Empty;
+        public string ScaleLength { get; set; } = string.Empty;
+        public string Width { get; set; } = string.Empty;
+        public string Depth { get; set; } = string.Empty;
+        public string Weight { get; set; } = string.Empty;
+        public required string CategoryId { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
     }
 }
