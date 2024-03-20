@@ -25,14 +25,7 @@ namespace MelodiaxGuitarsAPI.Repositories.OrderProducts
 
         public async Task AddOrderProductAsync(OrderProduct orderProduct)
         {
-            var newOrderProduct = new OrderProduct()
-            {
-                OrderId = orderProduct.OrderId,
-                ProductId = orderProduct.ProductId,
-                Quantity = orderProduct.Quantity
-            };
-
-            await _context.OrderProducts.AddAsync(newOrderProduct);
+            await _context.OrderProducts.AddAsync(orderProduct);
             await _context.SaveChangesAsync();
         }
 

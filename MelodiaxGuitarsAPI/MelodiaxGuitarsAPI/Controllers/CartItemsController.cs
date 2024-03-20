@@ -88,11 +88,6 @@ namespace MelodiaxGuitarsAPI.Controllers
 
             var userId = userIdClaim.Value;
             var shoppingCart = await _shoppingCartRepository.GetShoppingCartByUserId(userId);
-            if (shoppingCart == null)
-            {
-                shoppingCart = new ShoppingCart { UserId = userId };
-                await _shoppingCartRepository.AddShoppingCartAsync(shoppingCart);
-            }
 
             shoppingCart.CartItems ??= new List<CartItem>();
             shoppingCart.CartItems.Add(cartItem);

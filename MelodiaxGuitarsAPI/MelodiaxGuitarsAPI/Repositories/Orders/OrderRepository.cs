@@ -25,16 +25,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
 
         public async Task AddOrderAsync(Order order)
         {
-            var newOrder = new Order()
-            {
-                UserId = order.UserId,
-                SubtotalCost = order.SubtotalCost,
-                Shipping = order.Shipping,
-                ShippingCost = order.ShippingCost,
-                TotalCost = order.TotalCost
-            };
-
-            await _context.Orders.AddAsync(newOrder);
+            await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
         }
 

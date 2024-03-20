@@ -48,11 +48,20 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
                 .FirstOrDefaultAsync(b => b.Id == brandId);
             if (brand != null)
             {
-                var product = await _context.Products.FindAsync(productId);
+                var product = await _context.Products.FirstOrDefaultAsync(b => b.Id == productId); 
                 if (product != null)
                 {
-                    brand.Products.Add(product);
-                    await _context.SaveChangesAsync();
+
+                    if(brand.Products == null)
+                    {
+                        brand.Products = new List<Product>();
+                    }
+
+                    if (!brand.Products.Any(p => p.Id == productId))
+                    {
+                        brand.Products.Add(product);
+                        await _context.SaveChangesAsync();
+                    }
                 }
             }
         }

@@ -60,7 +60,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> PutProduct(string id, ProductDto productDto)
         {
             var productToUpdate = await _productRepository.GetProductById(id);
@@ -69,11 +69,11 @@ namespace MelodiaxGuitarsAPI.Controllers
                 return NotFound();
             }
 
-            var brand = _mapper.Map<Brand>(productDto.Brand);
-            var category = _mapper.Map<Category>(productDto.Category);
+            /*var brand = _mapper.Map<Brand>(productDto.Brand);
+            var category = _mapper.Map<Category>(productDto.Category);*/
 
-            productToUpdate.Brand = brand;
-            productToUpdate.Category = category;
+            /*productToUpdate.Brand = brand;
+            productToUpdate.Category = category;*/
             productToUpdate.Name = productDto.Name;
             productToUpdate.Description = productDto.Description;
             productToUpdate.Model = productDto.Model;
@@ -109,13 +109,14 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // POST: api/Products
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
         {
             var product = _mapper.Map<Product>(productDto);
+            product.Id = Guid.NewGuid().ToString();
             await _productRepository.AddProductAsync(product);
-            await _brandRepository.UpdateBrandProductsAsync(product.Brand.Id, product.Id);
-            await _categoryRepository.UpdateCategoryProductsAsync(product.Category.Id, product.Id);
+            await _brandRepository.UpdateBrandProductsAsync(product.BrandId, product.Id);
+            await _categoryRepository.UpdateCategoryProductsAsync(product.CategoryId, product.Id);
 
             var createdProduct = _mapper.Map<ProductDto>(product);
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, createdProduct);
@@ -123,7 +124,7 @@ namespace MelodiaxGuitarsAPI.Controllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        /*[Authorize(Roles = "Admin")]*/
         public async Task<IActionResult> DeleteProduct(string id)
         {
             var productToDelete = await _productRepository.GetProductById(id);

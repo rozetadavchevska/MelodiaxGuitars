@@ -1,1 +1,135 @@
-<p>products works!</p>
+<div class="products">
+    <div class="products-header">
+        <h2>Products</h2>
+        <button mat-raised-button color="primary" (click)="showAddForm()">Add New</button>
+    </div>
+
+    <div *ngIf="addProductFlag" class="add-form">
+        <h2>Add New Product</h2>
+        <form [formGroup]="form" (ngSubmit)="addProduct()">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field> 
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>    
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Brand</mat-label>
+                <mat-select formControlName="brandId">
+                    <mat-option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Model</mat-label>
+                <input matInput formControlName="model">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Type</mat-label>
+                <input matInput formControlName="type">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Hand</mat-label>
+                <input matInput formControlName="hand">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Body shape</mat-label>
+                <input matInput formControlName="bodyShape">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Color</mat-label>
+                <input matInput formControlName="color">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Top</mat-label>
+                <input matInput formControlName="top">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Sides and back</mat-label>
+                <input matInput formControlName="sidesAndBack">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Neck</mat-label>
+                <input matInput formControlName="neck">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Nut</mat-label>
+                <input matInput formControlName="nut">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Fingerboard</mat-label>
+                <input matInput formControlName="fingerboard">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Strings</mat-label>
+                <input matInput formControlName="strings">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Tuners</mat-label>
+                <input matInput formControlName="tuners">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Bridge</mat-label>
+                <input matInput formControlName="bridge">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Controls</mat-label>
+                <input matInput formControlName="controls">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Pickups</mat-label>
+                <input matInput formControlName="pickups">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Pickup switch</mat-label>
+                <input matInput formControlName="pickupSwitch">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Cutaway</mat-label>
+                <mat-select formControlName="cutaway">
+                    <mat-option [value]="true">Yes</mat-option>
+                    <mat-option [value]="false">No</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Pickguard</mat-label>
+                <input matInput formControlName="pickguard">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Case</mat-label>
+                <input matInput formControlName="case">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Scale length</mat-label>
+                <input matInput formControlName="scaleLength">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Width</mat-label>
+                <input matInput formControlName="width">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Depth</mat-label>
+                <input matInput formControlName="depth">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Weight</mat-label>
+                <input matInput formControlName="weight">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="categoryId">
+                    <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Image</mat-label>
+                <input matInput formControlName="imageUrl" type="url">
+            </mat-form-field>
+            <div class="button-group">
+                <button mat-raised-button color="primary" type="submit">Save</button>
+                <button mat-raised-button type="button" (click)="cancelAdd()">Cancel</button>
+              </div>
+        </form>
+    </div>
+</div>

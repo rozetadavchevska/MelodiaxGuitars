@@ -1,4 +1,5 @@
 ﻿using MelodiaxGuitarsAPI.Data;
+using MelodiaxGuitarsAPI.DTOs;
 using MelodiaxGuitarsAPI.Models;
 using MelodiaxGuitarsAPI.Repositories.Base;
 using Microsoft.CodeAnalysis;
@@ -30,6 +31,19 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
 
         public async Task AddProductAsync(Product product)
         {
+            var brand = await _context.Brands
+                .Include(b => b.Products)
+                .FirstOrDefaultAsync(b => b.Id == product.BrandId);
+            var category = await _context.Categories
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.Id == product.CategoryId);
+
+            if (brand != null && category != null)
+            {
+                product.Brand = brand;
+                product.Category = category;
+            }
+
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
         }

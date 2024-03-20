@@ -7,7 +7,7 @@ namespace MelodiaxGuitarsAPI.DTOs
     {
         public string Name { get; set; }
         public string Description { get; set; } 
-        public BrandDto Brand { get; set; }
+        public string BrandId { get; set; }
         public string Model { get; set; }
         public string Type { get; set; }
         public string Hand { get; set; }
@@ -31,8 +31,7 @@ namespace MelodiaxGuitarsAPI.DTOs
         public string Width { get; set; }
         public string Depth { get; set; }
         public string Weight { get; set; }
-        public CategoryDto Category { get; set; }
+        public string CategoryId { get; set; }
         public string ImageUrl { get; set; }
-        public ICollection<OrderProductDto> OrderProducts { get; set; }
     }
 }

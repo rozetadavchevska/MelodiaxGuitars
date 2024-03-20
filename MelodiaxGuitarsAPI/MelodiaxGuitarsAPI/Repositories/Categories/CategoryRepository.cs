@@ -45,11 +45,19 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
 
             if(category != null)
             {
-                var product = await _context.Products.FindAsync(productId);
-                if(product != null)
+                var product = await _context.Products.FirstOrDefaultAsync(c => c.Id == productId);
+                if (product != null)
                 {
-                    category.Products.Add(product);
-                    await _context.SaveChangesAsync();
+                    if(category.Products == null)
+                    {
+                        category.Products = new List<Product>();
+                    }
+
+                    if (!category.Products.Any(p => p.Id == productId))
+                    {
+                        category.Products.Add(product);
+                        await _context.SaveChangesAsync();
+                    }
                 }
             }
         }

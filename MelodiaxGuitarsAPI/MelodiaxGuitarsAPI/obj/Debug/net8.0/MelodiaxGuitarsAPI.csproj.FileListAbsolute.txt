@@ -161,3 +161,5 @@ C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsA
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Proxies.dll

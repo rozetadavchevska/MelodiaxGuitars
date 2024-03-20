@@ -6,9 +6,9 @@ namespace MelodiaxGuitarsAPI.Models
 {
     public class ShoppingCart
     {
-        public string Id { get; set; }
-        public string UserId { get; set; }
-        public User User { get; set; }
-        public ICollection<CartItem>? CartItems { get; set; }
+        public required string Id { get; set; }
+        public required string UserId { get; set; }
+        public User? User { get; set; }
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
 }

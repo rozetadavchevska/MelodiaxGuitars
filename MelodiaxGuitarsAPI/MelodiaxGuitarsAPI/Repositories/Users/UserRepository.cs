@@ -51,6 +51,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
 
             var newShoppingCart = new ShoppingCart
             {
+                Id = Guid.NewGuid().ToString(),
                 UserId = newUser.Id, 
                 User = newUser
             };

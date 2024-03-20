@@ -12,10 +12,6 @@ namespace MelodiaxGuitarsAPI.Models
         [Required(ErrorMessage = "Last name is required")]
         [NotNull]
         public string LastName { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
-        [NotNull]
-        public string Email { get; set; } = string.Empty;
         [Required(ErrorMessage = "Address is required")]
         [NotNull]
         public string Address { get; set; } = string.Empty;
@@ -25,9 +21,9 @@ namespace MelodiaxGuitarsAPI.Models
         [Required(ErrorMessage = "Country is required")]
         [NotNull]
         public string Country { get; set; } = string.Empty;
-        public ICollection<Order>? Orders { get; set; }
-        public string ShoppingCartId { get; set; }
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
+        public string ShoppingCartId { get; set; } = string.Empty;
         public ShoppingCart? ShoppingCart { get; set; }
-        public string Role { get; set; }
+        public string Role { get; set; } = string.Empty;
     }
 }

@@ -24,13 +24,7 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
 
         public async Task AddCartItemAsync(CartItem item)
         {
-            var newCartItem = new CartItem()
-            {
-                ProductId = item.ProductId,
-                Quantity = item.Quantity
-            };
-
-            await _context.CartItems.AddAsync(newCartItem);
+            await _context.CartItems.AddAsync(item);
             await _context.SaveChangesAsync();
         }
 
