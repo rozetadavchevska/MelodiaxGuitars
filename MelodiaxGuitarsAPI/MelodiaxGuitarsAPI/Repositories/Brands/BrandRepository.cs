@@ -19,6 +19,11 @@ namespace MelodiaxGuitarsAPI.Repositories.Brands
                 .Include(p => p.Products)
                 .FirstOrDefaultAsync(b => b.Id == id);
 
+            if (brandDetails == null)
+            {
+                throw new Exception("Brand not found");
+            }
+
             return brandDetails;
         }
 

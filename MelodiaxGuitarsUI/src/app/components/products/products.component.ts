@@ -13,6 +13,7 @@ import { CategoryService } from '../../services/category/category.service';
 import { Brand } from '../../models/Brand';
 import { Category } from '../../models/Category';
 import { ProductService } from '../../services/product/product.service';
+import { Product } from '../../models/Product';
 
 @Component({
   selector: 'app-products',
@@ -40,7 +41,14 @@ export class ProductsComponent implements OnInit {
     ){}
   brands:Brand[] = [];
   categories:Category[] = [];
+  dataSource: Product[] = [];
   addProductFlag: boolean = false;
+  editProductId:string | null = null;
+
+  displayedColumns: string[] = ['id', 'name', 'description', 'brandId', 'model', 'type',
+    'hand', 'bodyShape', 'color', 'top', 'sidesAndBack', 'neck', 'nut', 'fingerboard', 'strings',
+    'tuners', 'bridge', 'controls', 'pickups', 'pickupSwitch', 'cutaway', 'pickguard', 'case',
+    'scaleLength', 'width', 'depth', 'weight', 'categoryId', 'imageUrl', 'actions']
 
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -74,6 +82,8 @@ export class ProductsComponent implements OnInit {
   })
 
   ngOnInit(): void {
+    this.loadProducts();
+
     this.brandService.getBrands().subscribe(
       (brands) => {
         this.brands = brands;
@@ -85,6 +95,17 @@ export class ProductsComponent implements OnInit {
         this.categories = categories;
       }
     )
+  }
+
+  loadProducts():void{
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.dataSource = products;
+      },
+      // error: (err) => {
+      //   console.error('Error getting products: ', err)
+      // }
+    })
   }
 
   showAddForm(){
@@ -107,8 +128,50 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-
   cancelAdd(){
     this.addProductFlag = false;
+  }
+
+  editProduct(id:string){
+    this.editProductId = id;
+  }
+
+  cancelEdit():void{
+    this.editProductId = null;
+  }
+
+  deleteProduct(id:string){
+    if(confirm('Are you sure you want to delete this product?')){
+      this.productService.deleteProduct(id).subscribe(
+        () => {
+          this.dataSource = this.dataSource.filter(product => product.id !== id);
+        },
+        (error) => {
+          console.error('Error deleting product: ', error);
+        }
+      )
+    }
+  }
+
+  saveProductChanges():void{
+    if(this.form == null || this.editProductId == null){
+      return;
+    }
+
+    const formData = this.form.value;
+    this.productService.updateProduct(this.editProductId, formData).subscribe(
+      () => {
+        const index = this.dataSource.findIndex(product => product.id === this.editProductId);
+        if(index !== -1){
+          this.dataSource[index] = formData;
+        }
+
+        this.loadProducts();
+        this.editProductId = null;
+      },
+      (err) => {
+        console.error('Error updating brand:', err);
+      }
+    )
   }
 }

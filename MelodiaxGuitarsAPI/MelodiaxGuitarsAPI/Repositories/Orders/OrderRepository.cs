@@ -20,6 +20,11 @@ namespace MelodiaxGuitarsAPI.Repositories.Orders
                 .Include(op => op.OrderProducts)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
+            if (order == null)
+            {
+                throw new Exception("Order not found");
+            }
+
             return order;
         }
 

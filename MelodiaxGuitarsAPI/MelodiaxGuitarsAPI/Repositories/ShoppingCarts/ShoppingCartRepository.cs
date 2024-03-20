@@ -20,6 +20,11 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync(s => s.Id == id);
 
+            if (shoppingCart == null)
+            {
+                throw new Exception("Shopping Cart not found");
+            }
+
             return shoppingCart;
         }
 
@@ -29,6 +34,11 @@ namespace MelodiaxGuitarsAPI.Repositories.ShoppingCarts
                 .Include(u => u.User)
                 .Include(sc => sc.CartItems)
                 .FirstOrDefaultAsync(sc => sc.UserId == userId);
+
+            if (shoppingCart == null)
+            {
+                throw new Exception("Shopping Cart not found");
+            }
 
             return shoppingCart;
         }

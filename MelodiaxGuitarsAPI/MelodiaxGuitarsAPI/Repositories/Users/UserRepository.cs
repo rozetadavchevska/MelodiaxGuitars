@@ -25,6 +25,11 @@ namespace MelodiaxGuitarsAPI.Repositories.Users
                 .Include(o => o.Orders)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
             return user;
         }
 

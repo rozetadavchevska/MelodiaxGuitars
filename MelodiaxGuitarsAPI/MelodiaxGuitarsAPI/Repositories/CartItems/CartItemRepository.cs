@@ -19,6 +19,11 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
                 .Include(p => p.Product)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
+            if (cartItem == null)
+            {
+                throw new Exception("Cart Item not found");
+            }
+
             return cartItem;
         }
 

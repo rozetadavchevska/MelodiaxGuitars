@@ -19,6 +19,11 @@ namespace MelodiaxGuitarsAPI.Repositories.Categories
                 .Include(p => p.Products)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
+            if (category == null)
+            {
+                throw new Exception("Category not found");
+            }
+
             return category;
         }
 
