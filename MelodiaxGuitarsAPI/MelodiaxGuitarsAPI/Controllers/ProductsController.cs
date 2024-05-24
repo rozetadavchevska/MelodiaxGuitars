@@ -100,6 +100,7 @@ namespace MelodiaxGuitarsAPI.Controllers
             productToUpdate.Depth = productDto.Depth;
             productToUpdate.Weight = productDto.Weight;
             productToUpdate.ImageUrl = productDto.ImageUrl;
+            productToUpdate.Price = productDto.Price;
 
             await _productRepository.UpdateProductAsync(id, productToUpdate);
             await _brandRepository.UpdateBrandProductsAsync(productToUpdate.Brand.Id, id);

@@ -92,6 +92,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Products
                 oldProduct.Weight = product.Weight;
                 oldProduct.CategoryId = product.CategoryId;
                 oldProduct.ImageUrl = product.ImageUrl;
+                oldProduct.Price = product.Price;
 
                 if(oldProduct.Brand != null)
                 {

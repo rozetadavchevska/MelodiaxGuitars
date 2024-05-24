@@ -1,0 +1,28 @@
+.acoustic{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &-text{
+        margin:15px;
+    }
+
+    &-container{
+        display: flex;
+        margin: 15px;
+    }
+
+    &-filters{
+        width: 30%;
+        background-color:antiquewhite;
+
+        &-container{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    &-products{
+        width: 70%;
+    }
+}

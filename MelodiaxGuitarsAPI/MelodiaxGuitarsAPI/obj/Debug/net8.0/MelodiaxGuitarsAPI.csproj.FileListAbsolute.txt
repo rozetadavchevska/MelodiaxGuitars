@@ -25,7 +25,6 @@ C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsA
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.MelodiaxGuitarsAPI.props
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\obj\Debug\net8.0\scopedcss\bundle\MelodiaxGuitarsAPI.styles.css
-C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\obj\Debug\net8.0\MelodiaxGuitarsAPI.csproj.CopyComplete
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\obj\Debug\net8.0\MelodiaxGuitarsAPI.dll
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\obj\Debug\net8.0\refint\MelodiaxGuitarsAPI.dll
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\obj\Debug\net8.0\MelodiaxGuitarsAPI.pdb
@@ -161,3 +160,4 @@ C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsA
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\rozet\OneDrive\Desktop\Github Projects\MelodiaxGuitars\MelodiaxGuitarsAPI\MelodiaxGuitarsAPI\obj\Debug\net8.0\Melodiax.D3C1B3E9.Up2Date

@@ -34,5 +34,6 @@ namespace MelodiaxGuitarsAPI.DTOs
         public string Weight { get; set; } = string.Empty;
         public required string CategoryId { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
+        public double Price { get; set; } = 0;
     }
 }
