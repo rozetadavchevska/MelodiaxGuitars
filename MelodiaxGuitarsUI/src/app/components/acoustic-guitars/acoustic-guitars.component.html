@@ -6,24 +6,26 @@
             <h3>Filters</h3>
 
             <div class="acoustic-filters-container">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Brand</mat-label>
-                    <mat-select [(value)]="selected">
-                        <mat-option>None</mat-option>
-                        <mat-option value="option1">Option 1</mat-option>
-                        <mat-option value="option2">Option 2</mat-option>
-                        <mat-option value="option3">Option 3</mat-option>
+                    <mat-select >
+                        <!-- <mat-option>None</mat-option> -->
+                        <mat-option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Category</mat-label>
-                    <mat-select [(value)]="selected">
-                        <mat-option>None</mat-option>
-                        <mat-option value="option1">Option 1</mat-option>
-                        <mat-option value="option2">Option 2</mat-option>
-                        <mat-option value="option3">Option 3</mat-option>
+                    <mat-select >
+                        <!-- <mat-option>None</mat-option> -->
+                        <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+                <!-- <mat-form-field appearance="outline">
+                    <mat-label>Price</mat-label>
+                    <mat-select >
+                        <mat-option>None</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
             </div>
         </div>
     

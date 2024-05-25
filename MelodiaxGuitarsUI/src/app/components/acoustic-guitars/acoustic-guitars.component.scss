@@ -13,8 +13,10 @@
     }
 
     &-filters{
-        width: 30%;
+        width: 20%;
         background-color:antiquewhite;
+        padding: 20px;
+        border-style: dashed;
 
         &-container{
             display: flex;
@@ -23,6 +25,7 @@
     }
 
     &-products{
-        width: 70%;
+        width: 80%;
+        border-style: dashed;
     }
 }
