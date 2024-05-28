@@ -126,6 +126,10 @@
                 <mat-label>Image</mat-label>
                 <input matInput formControlName="imageUrl" type="url">
             </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Price</mat-label>
+                <input matInput formControlName="price">
+            </mat-form-field>
             <div class="button-group">
                 <button mat-raised-button color="primary" type="submit">Save</button>
                 <button mat-raised-button type="button" (click)="cancelAdd()">Cancel</button>
@@ -254,6 +258,10 @@
             <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Image</mat-label>
                 <input matInput formControlName="imageUrl" type="url">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Price</mat-label>
+                <input matInput formControlName="price">
             </mat-form-field>
             <div class="button-group">
                 <button mat-raised-button color="primary" type="submit">Save</button>
@@ -410,6 +418,11 @@
             <ng-container matColumnDef="imageUrl">
                 <th mat-header-cell *matHeaderCellDef>Image URL</th>
                 <td mat-cell *matCellDef="let product">{{product.imageUrl}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef>Price</th>
+                <td mat-cell *matCellDef="let product">{{product.price}}</td>
             </ng-container>
     
             <ng-container matColumnDef="actions" class="actions">

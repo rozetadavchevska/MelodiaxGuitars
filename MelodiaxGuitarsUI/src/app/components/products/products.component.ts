@@ -48,7 +48,7 @@ export class ProductsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'description', 'brandId', 'model', 'type',
     'hand', 'bodyShape', 'color', 'top', 'sidesAndBack', 'neck', 'nut', 'fingerboard', 'strings',
     'tuners', 'bridge', 'controls', 'pickups', 'pickupSwitch', 'cutaway', 'pickguard', 'case',
-    'scaleLength', 'width', 'depth', 'weight', 'categoryId', 'imageUrl', 'actions']
+    'scaleLength', 'width', 'depth', 'weight', 'categoryId', 'imageUrl', 'price', 'actions']
 
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -78,7 +78,8 @@ export class ProductsComponent implements OnInit {
     depth: new FormControl(''),
     weight: new FormControl(''),
     categoryId: new FormControl(''),
-    imageUrl: new FormControl('')
+    imageUrl: new FormControl(''),
+    price: new FormControl('')
   })
 
   ngOnInit(): void {

@@ -30,5 +30,6 @@ export interface Product{
     depth: string,
     weight: string,
     categoryId: string,
-    imageUrl: string
+    imageUrl: string,
+    price: string,
 }

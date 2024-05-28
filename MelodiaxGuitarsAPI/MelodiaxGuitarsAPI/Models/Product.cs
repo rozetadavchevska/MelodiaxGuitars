@@ -66,7 +66,7 @@ namespace MelodiaxGuitarsAPI.Models
         public Category? Category { get; set; }
         [AllowNull]
         public string ImageUrl { get; set; }
-        public double Price { get; set; }
+        public string Price { get; set; }
         public ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
     }
 }

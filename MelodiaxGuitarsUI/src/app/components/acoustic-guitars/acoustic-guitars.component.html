@@ -5,32 +5,39 @@
         <div class="acoustic-filters">
             <h3>Filters</h3>
 
-            <div class="acoustic-filters-container">
-                <mat-form-field appearance="outline">
+            <!-- <div class="acoustic-filters-container">
+                <mat-form-field class="form-field" appearance="outline">
                     <mat-label>Brand</mat-label>
-                    <mat-select >
-                        <!-- <mat-option>None</mat-option> -->
+                    <mat-select>
+                        <mat-option>None</mat-option>
                         <mat-option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Category</mat-label>
-                    <mat-select >
-                        <!-- <mat-option>None</mat-option> -->
-                        <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <!-- <mat-form-field appearance="outline">
+                <mat-slider class="form-field" min="200" max="500">
                     <mat-label>Price</mat-label>
-                    <mat-select >
-                        <mat-option>None</mat-option>
-                    </mat-select>
-                </mat-form-field> -->
-            </div>
+                    <input value="300" matSliderStartThumb>
+                    <input value="400" matSliderEndThumb>
+                  </mat-slider>
+            </div> -->
         </div>
     
         <div class="acoustic-products">
             <h3>Products</h3>
+            <div class="acoustic-products-container">
+                <mat-card class="card" *ngFor="let product of products">
+                    <mat-card-header>
+                      <div mat-card-avatar class="card-header-image"></div>
+                      <mat-card-title>{{product.name}}</mat-card-title>
+                    </mat-card-header>
+                    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                    <mat-card-content>
+                      <p>{{product.price}}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                      <button mat-button>ADD TO CART</button>
+                    </mat-card-actions>
+                  </mat-card>
+            </div>
         </div>
     </div>
 </div>
