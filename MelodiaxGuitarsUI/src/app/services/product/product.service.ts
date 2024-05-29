@@ -46,7 +46,8 @@ export class ProductService {
       depth: product.depth,
       weight: product.weight,
       categoryId: product.categoryId,
-      imageUrl: product.imageUrl
+      imageUrl: product.imageUrl,
+      price: product.price
     }
     return this.http.post<Product>(this.baseApiUrl + 'api/Products', body);
   }
@@ -81,7 +82,8 @@ export class ProductService {
       depth: product.depth,
       weight: product.weight,
       categoryId: product.categoryId,
-      imageUrl: product.imageUrl
+      imageUrl: product.imageUrl,
+      price: product.price
     };
     return this.http.put<Product>(this.baseApiUrl + `api/Products/${id}`, body);
   }

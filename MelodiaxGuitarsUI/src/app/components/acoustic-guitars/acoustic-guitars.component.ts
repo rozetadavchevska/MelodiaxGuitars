@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Product } from '../../models/Product';
 import { ProductService } from '../../services/product/product.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
@@ -25,6 +26,8 @@ import { ProductService } from '../../services/product/product.service';
     CommonModule,
     MatCardModule,
     MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './acoustic-guitars.component.html',
   styleUrl: './acoustic-guitars.component.scss'
@@ -38,24 +41,41 @@ export class AcousticGuitarsComponent implements OnInit {
   brands:Brand[] = [];
   categories:Category[] = [];
   products:Product[] = [];
+  filteredProducts:Product[] = [];
 
-  ngOnInit():void{
-    this.brandService.getBrands().subscribe(
-      (brands) => {
-        this.brands = brands;
-      }
-    )
+  acousticCategoryId:string | null = null;
+  selectedBrand: string | null = null;
+  
 
-    this.categoryService.getCategories().subscribe(
-      (categories) => {
-        this.categories = categories;
-      }
-    )
+  ngOnInit(): void {
+    this.brandService.getBrands().subscribe((brands) => {
+      this.brands = brands;
+    });
 
-    this.productService.getProducts().subscribe(
-      (products) => {
-        this.products = products;
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.categories = categories;
+      const acousticCategory = this.categories.find(category => category.name.toLowerCase() === 'acoustic');
+      if (acousticCategory) {
+        this.acousticCategoryId = acousticCategory.id;
+        this.loadProducts();
       }
-    )
+    });
   }
+
+  loadProducts(): void {
+    this.productService.getProducts().subscribe((products) => {
+      if (this.acousticCategoryId) {
+        this.products = products.filter(product => product.categoryId === this.acousticCategoryId);
+        this.filteredProducts = [...this.products]; 
+      }
+    });
+  }
+
+  filterProducts(): void {
+    console.log("Selected Brand:", this.selectedBrand);
+    this.filteredProducts = this.products.filter(product => {
+      return !this.selectedBrand || product.brandId.toString() === this.selectedBrand.toString();
+    });
+  }
+
 }
