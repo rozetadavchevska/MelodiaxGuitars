@@ -72,7 +72,6 @@ export class AcousticGuitarsComponent implements OnInit {
   }
 
   filterProducts(): void {
-    console.log("Selected Brand:", this.selectedBrand);
     this.filteredProducts = this.products.filter(product => {
       return !this.selectedBrand || product.brandId.toString() === this.selectedBrand.toString();
     });
