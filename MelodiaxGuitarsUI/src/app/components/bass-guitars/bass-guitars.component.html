@@ -1,1 +1,58 @@
-<p>bass-guitars works!</p>
+<div class="bass">
+    <h3 class="bass-text">Bass Guitars</h3>
+
+    <div class="bass-container">
+        <div class="bass-container-filters">
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Brand</mat-label>
+                <mat-select [(ngModel)]="selectedBrand" (ngModelChange)="filterProducts()">
+                  <mat-option [value]="null">None</mat-option>
+                  <mat-option *ngFor="let brand of brands" [value]="brand.id">{{brand.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+      
+            <!-- <div class="price-slider">
+                <mat-label>Min Price</mat-label>
+                <mat-slider
+                  class="form-field"
+                  min="200"
+                  max="1000"
+                  step="10"
+                  value="minPrice"
+                  (input)="onPriceChange($event)">
+                </mat-slider>
+                <div>
+                  <span>Min: {{priceRange[0]}}</span>
+                </div>
+                <mat-label>Max Price</mat-label>
+                <mat-slider
+                  class="form-field"
+                  min="200"
+                  max="1000"
+                  step="10"
+                  value="maxPrice"
+                  (input)="onMaxPriceChange($event)">
+                </mat-slider>
+                <div>
+                  <span>Max: {{priceRange[1]}}</span>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="bass-container-products">
+            <h3>Products</h3>
+            <div class="electric-products-container">
+                <mat-card class="card" *ngFor="let product of filteredProducts">
+                    <img mat-card-image class="product-photo" src="{{product.imageUrl}}" alt="Guitar photo">
+                    <mat-card-content>
+                        <h4>{{product.name}}</h4>
+                        <p>&euro; {{product.price}}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>ADD TO CART</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>
