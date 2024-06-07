@@ -8,6 +8,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { Brand } from '../../models/Brand';
 import { Product } from '../../models/Product';
+import { Category } from '../../models/Category';
+import { BrandService } from '../../services/brand/brand.service';
+import { ProductService } from '../../services/product/product.service';
+import { CategoryService } from '../../services/category/category.service';
 
 @Component({
   selector: 'app-accessories',
@@ -26,17 +30,53 @@ import { Product } from '../../models/Product';
   styleUrl: './accessories.component.scss'
 })
 export class AccessoriesComponent implements OnInit {
-  brands:Brand[] = [];
+  constructor(
+    private brandService:BrandService,
+    private productService:ProductService,
+    private categoryService:CategoryService
+  ){}
 
+  brands:Brand[] = [];
+  categories:Category[] = [];
+  products:Product[] = [];
   filteredProducts:Product[] = [];
 
   selectedBrand: string | null = null;
+  accessoriesCategoryId: string | null = null;
 
-  ngOnInit(): void {
-    
+  ngOnInit():void{
+    this.brandService.getBrands().subscribe(
+      (brands) => {
+        this.brands = brands;
+      }
+    )
+
+    this.categoryService.getCategories().subscribe(
+      (categories) => {
+        this.categories = categories;
+        const accessoriesCategory = this.categories.find(category => category.name.toLowerCase() === "accessories");
+        if(accessoriesCategory){
+          this.accessoriesCategoryId = accessoriesCategory.id;
+          this.loadProducts();
+        }
+      }
+    )
+  }
+
+  loadProducts():void{
+    this.productService.getProducts().subscribe(
+      (products) => {
+        if(this.accessoriesCategoryId){
+          this.products = products.filter(product => product.categoryId === this.accessoriesCategoryId);
+          this.filteredProducts = [...products];
+        }
+      }
+    )
   }
 
   filterProducts():void{
-
+    this.filteredProducts = this.products.filter(product => {
+      return !this.selectedBrand || product.brandId.toString() === this.selectedBrand.toString();
+    })
   }
 }
