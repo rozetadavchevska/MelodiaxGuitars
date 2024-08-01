@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge'; 
 import { CommonModule } from '@angular/common';
 import { AcousticGuitarsComponent } from '../../acoustic-guitars/acoustic-guitars.component';
-import { RouterModule} from '@angular/router';
+import { Router, RouterModule} from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -25,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  constructor(protected authService:AuthService){}
+  constructor(protected authService:AuthService,private router:Router){}
 
   isMenuActive = false;
 
@@ -35,5 +35,8 @@ export class NavbarComponent {
 
   logout(){
     this.authService.removeToken();
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
   }
 }

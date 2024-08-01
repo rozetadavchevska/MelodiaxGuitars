@@ -25,13 +25,17 @@
       width: 100%;
       display: flex;
       align-items: center;
+
+      &-text{
+        margin-right: 20px; 
+      }
   
       &-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        align-self: center;
         flex-wrap: wrap;
-        margin-bottom: 20px;
       }
     }
   
@@ -71,8 +75,3 @@
     width: fit-content;
   }
   
-  mat-form-field {
-    width: 100%;
-    margin-left: 20px;
-    text-align: center; 
-  }

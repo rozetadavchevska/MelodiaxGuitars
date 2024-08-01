@@ -7,7 +7,7 @@ namespace MelodiaxGuitarsAPI.Repositories.Base
     public class EntityBaseRepository<T> : IEntityBaseRepository<T> where T : class
     {
         public readonly AppDbContext _context;
-        public EntityBaseRepository(AppDbContext context)
+        public EntityBaseRepository(AppDbContext context) 
         {
             _context = context;
         }

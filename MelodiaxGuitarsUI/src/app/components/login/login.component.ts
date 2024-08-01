@@ -45,10 +45,14 @@ export class LoginComponent {
         const isAdmin = this.authService.isAdmin();
         if (isAdmin) {
           // Redirect to admin dashboard
-          this.router.navigate(['/acoustic']);
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
         } else {
           // Redirect to user dashboard
-          this.router.navigate(['/electric']);
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
         }
       },
       error: (err) => {
