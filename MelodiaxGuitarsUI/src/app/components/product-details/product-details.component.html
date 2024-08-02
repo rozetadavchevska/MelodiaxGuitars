@@ -1,1 +1,33 @@
-<p>product-details works!</p>
+<div class="product" *ngIf="product">
+    <div class="product-container">
+        <div class="product-container-image">
+            <img  src="{{product.imageUrl}}">
+        </div>
+        <div class="product-container-details" >
+            <h1>{{product.name}}</h1>
+            <h2 class="price">${{product.price}}</h2>
+            <button mat-button class="add-btn">ADD TO CART</button>
+            <div class="info">
+                <div class="delivery">
+                    <mat-icon class="delivery-icon">local_shipping</mat-icon>
+                    <p>FREE delivery to most US locations for orders over $150</p>
+                </div>
+                <div class="gift">
+                    <mat-icon class="redeem-icon">redeem</mat-icon>
+                    <p>FREE gift (Melodiax Guitars T-Shirt) for orders over $2000</p>
+                </div>
+            </div>
+            
+            <h2>Description</h2>
+            <p>{{product.description}}</p>
+        </div>
+    </div>
+    <div class="product-specs">
+        <h2>Specifications</h2>
+        <ul class="specs-list">
+            <li *ngFor="let spec of specifications">
+                <strong>{{spec.label}}:</strong> {{spec.value}}
+            </li>
+        </ul>
+    </div>
+</div>
