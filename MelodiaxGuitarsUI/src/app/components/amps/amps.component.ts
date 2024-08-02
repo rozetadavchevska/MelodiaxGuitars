@@ -12,6 +12,7 @@ import { ProductService } from '../../services/product/product.service';
 import { Brand } from '../../models/Brand';
 import { Category } from '../../models/Category';
 import { Product } from '../../models/Product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-amps',
@@ -33,7 +34,8 @@ export class AmpsComponent implements OnInit{
   constructor(
     private brandService:BrandService,
     private categoryService:CategoryService,
-    private productService:ProductService
+    private productService:ProductService,
+    private router:Router
   ){}
 
   brands:Brand[] = [];
@@ -78,5 +80,9 @@ export class AmpsComponent implements OnInit{
     this.filteredProducts = this.products.filter(product => {
       return !this.selectedBrand || product.brandId.toString() === this.selectedBrand.toString();
     })
+  }
+
+  goToProductDetails(productId:string): void {
+    this.router.navigate(['/product', productId]);
   }
 }

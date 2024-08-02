@@ -4,7 +4,7 @@
 
     <div class="accessories-container">
         <div class="accessories-filters">
-            <h3>Filters</h3>
+            <h3 class="accessories-filters-text">Filters</h3>
 
             <div class="accessories-filters-container">
                 <mat-form-field class="form-field" appearance="outline">
@@ -47,7 +47,7 @@
         <div class="accessories-products">
             <h3>Products</h3>
             <div class="accessories-products-container">
-                <mat-card class="card" *ngFor="let product of filteredProducts">
+                <mat-card class="card" *ngFor="let product of filteredProducts" (click)="goToProductDetails(product.id)">
                     <img mat-card-image class="product-photo" src="{{product.imageUrl}}" alt="accessories photo">
                     <mat-card-content>
                         <h4>{{product.name}}</h4>

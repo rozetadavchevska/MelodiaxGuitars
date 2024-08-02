@@ -12,6 +12,7 @@ import { Category } from '../../models/Category';
 import { BrandService } from '../../services/brand/brand.service';
 import { ProductService } from '../../services/product/product.service';
 import { CategoryService } from '../../services/category/category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accessories',
@@ -33,7 +34,8 @@ export class AccessoriesComponent implements OnInit {
   constructor(
     private brandService:BrandService,
     private productService:ProductService,
-    private categoryService:CategoryService
+    private categoryService:CategoryService,
+    private router:Router
   ){}
 
   brands:Brand[] = [];
@@ -78,5 +80,9 @@ export class AccessoriesComponent implements OnInit {
     this.filteredProducts = this.products.filter(product => {
       return !this.selectedBrand || product.brandId.toString() === this.selectedBrand.toString();
     })
+  }
+
+  goToProductDetails(productId:string){
+    this.router.navigate(['/product', productId]);
   }
 }

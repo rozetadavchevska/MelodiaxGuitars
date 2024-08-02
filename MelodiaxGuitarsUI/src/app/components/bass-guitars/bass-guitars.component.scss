@@ -1,78 +1,77 @@
 .bass {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &-text {
+    width: 90%;
+    margin: 15px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  &-container {
+    width: 90%;
+    margin: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  &-filters {
     width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-  
-    &-text {
-      width: 90%;
-      margin: 15px;
-      font-size: 24px;
-      color: #333;
+
+    &-text{
+      margin-right: 20px; 
     }
-  
+
     &-container {
-      width: 90%;
-      margin: 15px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-    }
-  
-    &-filters {
-      width: 100%;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-  
-      &-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-      }
+      align-self: center;
+      flex-wrap: wrap;
     }
-  
-    &-products {
+  }
+
+  &-products {
+    width: 100%;
+
+    &-container {
       width: 100%;
-  
-      &-container {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        grid-gap: 20px;
-      }
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-gap: 20px;
     }
+  }
 }
 
 .card {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  cursor: pointer;
 }
 
 .card:hover {
-    transform: translateY(-5px);    
+  transform: translateY(-5px);
 }
 
 .product-photo {
-    height: 200px;
-    width: fit-content;
-}
-
-mat-form-field {
-    width: 100%;
-    margin-left: 20px;
-    text-align: center; 
+  height: 200px;
+  width: fit-content;
 }

@@ -16,6 +16,10 @@ export class ProductService {
     return this.http.get<Product[]>(this.baseApiUrl + 'api/Products');
   }
 
+  getProductById(id: string): Observable<any>{
+    return this.http.get<any>(this.baseApiUrl + `api/Products/${id}`);
+  }
+
   addProduct(product:Product):Observable<Product>{
     const body = {
       id: '',

@@ -11,6 +11,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { BrandsComponent } from './components/brands/brands.component';
 import { ProductsComponent } from './components/products/products.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 export const routes: Routes = [
     {path: 'acoustic', component: AcousticGuitarsComponent},
@@ -24,5 +25,6 @@ export const routes: Routes = [
     {path: 'cart', component: ShoppingCartComponent},
     {path: 'brands', component: BrandsComponent},
     {path: 'products', component:ProductsComponent},
-    {path: 'categories', component: CategoriesComponent}
+    {path: 'categories', component: CategoriesComponent},
+    {path: 'product/:id', component: ProductDetailsComponent} 
 ];

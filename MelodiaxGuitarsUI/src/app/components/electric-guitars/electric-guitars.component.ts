@@ -12,6 +12,7 @@ import { BrandService } from '../../services/brand/brand.service';
 import { CategoryService } from '../../services/category/category.service';
 import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../models/Product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-electric-guitars',
@@ -33,7 +34,8 @@ export class ElectricGuitarsComponent implements OnInit {
   constructor(
     private brandService:BrandService,
     private categoryService:CategoryService,
-    private productService:ProductService
+    private productService:ProductService,
+    private router:Router
   ){}
 
   brands:Brand[] = [];
@@ -78,5 +80,9 @@ export class ElectricGuitarsComponent implements OnInit {
     this.filteredProducts = this.products.filter(product => {
       return !this.selectedBrand || product.brandId.toString() === this.selectedBrand.toString();
     })
+  }
+
+  goToProductDetails(productId:string){
+    this.router.navigate(['/product', productId]);
   }
 }

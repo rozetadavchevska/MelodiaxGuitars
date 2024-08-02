@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Product } from '../../models/Product';
 import { ProductService } from '../../services/product/product.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class AcousticGuitarsComponent implements OnInit {
   constructor(
     private brandService:BrandService,
     private categoryService:CategoryService,
-    private productService:ProductService
+    private productService:ProductService,
+    private router:Router
   ){}
   brands:Brand[] = [];
   categories:Category[] = [];
@@ -75,6 +77,10 @@ export class AcousticGuitarsComponent implements OnInit {
     this.filteredProducts = this.products.filter(product => {
       return !this.selectedBrand || product.brandId.toString() === this.selectedBrand.toString();
     });
+  }
+
+  goToProductDetails(productId: string): void{
+    this.router.navigate(['/product', productId]);
   }
 
 }

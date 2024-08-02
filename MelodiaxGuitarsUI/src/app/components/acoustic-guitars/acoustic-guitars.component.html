@@ -1,5 +1,5 @@
 <div class="acoustic">
-    <h2 class="acoustic-text">Acoustic Guitars</h2>
+    <h3 class="acoustic-text">Acoustic Guitars</h3>
 
     <div class="acoustic-container">
         <div class="acoustic-filters">
@@ -46,15 +46,16 @@
         <div class="acoustic-products">
             <h3>Products</h3>
             <div class="acoustic-products-container">
-                <mat-card class="card" *ngFor="let product of filteredProducts">
+                <mat-card class="card" *ngFor="let product of filteredProducts" (click)="goToProductDetails(product.id)">
                     <img mat-card-image class="product-photo" src="{{product.imageUrl}}" alt="Guitar photo">
                     <mat-card-content>
                         <h4>{{product.name}}</h4>
                         <p>&euro; {{product.price}}</p>
                     </mat-card-content>
-                    <mat-card-actions>
+                    <!-- <mat-card-actions>
+                        <button mat-button>DETAILS</button>
                         <button mat-button>ADD TO CART</button>
-                    </mat-card-actions>
+                    </mat-card-actions> -->
                 </mat-card>
             </div>
         </div>
