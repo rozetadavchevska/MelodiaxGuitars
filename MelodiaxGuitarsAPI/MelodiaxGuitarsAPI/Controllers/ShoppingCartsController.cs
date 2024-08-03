@@ -52,6 +52,27 @@ namespace MelodiaxGuitarsAPI.Controllers
             return Ok(shoppingCartDto);
         }
 
+        // GET: api/ShoppingCarts/user/{userId}
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<ShoppingCartDto>> GetShoppingCartByUserId(string userId)
+        {
+            try
+            {
+                var shoppingCart = await _shoppingCartRepository.GetShoppingCartByUserId(userId);
+                if (shoppingCart == null)
+                {
+                    return NotFound();
+                }
+                var shoppingCartDto = _mapper.Map<ShoppingCartDto>(shoppingCart);
+                return Ok(shoppingCartDto);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details here
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
         // PUT: api/ShoppingCarts/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutShoppingCart(string id, ShoppingCartDto shoppingCartDto)

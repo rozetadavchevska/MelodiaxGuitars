@@ -29,7 +29,12 @@ namespace MelodiaxGuitarsAPI.Repositories.CartItems
 
         public async Task AddCartItemAsync(CartItem item)
         {
-            await _context.CartItems.AddAsync(item);
+            if (await _context.CartItems.AnyAsync(ci => ci.Id == item.Id))
+            {
+                throw new Exception("Item already exists");
+            }
+
+            _context.CartItems.Add(item);
             await _context.SaveChangesAsync();
         }
 

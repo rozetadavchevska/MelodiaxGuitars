@@ -6,6 +6,7 @@ namespace MelodiaxGuitarsAPI.Models
 {
     public class ShoppingCart
     {
+        [Key]
         public required string Id { get; set; }
         public required string UserId { get; set; }
         public User? User { get; set; }

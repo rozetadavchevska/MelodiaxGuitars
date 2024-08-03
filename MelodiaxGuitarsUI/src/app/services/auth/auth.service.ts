@@ -48,7 +48,7 @@ export class AuthService {
       const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
       return userRole === 'Admin';
     }
-    return false; // If there's no token or role is not admin, return false
+    return false; 
   }
 
   isAuthenticated(): boolean {
@@ -75,5 +75,14 @@ export class AuthService {
     } catch (error) {
       return null;
     }
+  }
+
+  getUserId(): string | null{
+    const token = this.getToken();
+    if(token){
+      const decodedToken: any = this.decodeToken(token);
+      return decodedToken ? decodedToken['sub'] : null;
+    }
+    return null;
   }
 }

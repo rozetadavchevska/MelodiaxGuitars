@@ -4,6 +4,8 @@ import { ProductService } from '../../services/product/product.service';
 import { Product } from '../../models/Product';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { CartService } from '../../services/cart/cart.service';
+import { CartItem } from '../../models/CartItem';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +19,11 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './product-details.component.scss'
 })
 export class ProductDetailsComponent {
-  constructor(private route:ActivatedRoute, private productService:ProductService){}
+  constructor(
+    private route:ActivatedRoute, 
+    private productService:ProductService,
+    private cartService:CartService
+  ){}
 
   product !: Product;
   specifications: {label: string, value: string | boolean}[] = []; 
@@ -60,5 +66,22 @@ export class ProductDetailsComponent {
     ]
 
     this.specifications = specs.filter(spec => spec.value !== null && spec.value !== '');
+  }
+
+  addToCart():void{
+    const cartItem: CartItem = {
+      id: '',
+      productId: this.product.id,
+      quantity: 1 
+    };
+
+    this.cartService.addCartItem(cartItem).subscribe(
+      response => {
+        console.log('Product added to cart:', response);
+      },
+      error => {
+        console.error('Error adding product to cart:', error);
+      }
+    )
   }
 }
